@@ -4,3 +4,10 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Force HTTPS redirect
+[[redirects]]
+  from = "http://*"
+  to = "https://:splat"
+  status = 301
+  force = true
