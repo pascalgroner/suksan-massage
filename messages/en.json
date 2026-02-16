@@ -1,0 +1,70 @@
+{
+  "Header": {
+    "home": "Home",
+    "services": "Services",
+    "contact": "Contact",
+    "title": "Suksan Massage"
+  },
+  "Footer": {
+    "home": "Home",
+    "services": "Services",
+    "contact": "Contact",
+    "imprint": "Imprint",
+    "copyright": "© {year} Suksan Massage. All rights reserved."
+  },
+  "Home": {
+    "heroTitle": "Relax, Rejuvenate, Revitalize",
+    "heroSubtitle": "Authentic Thai Massage in Bern City Center",
+    "bookButton": "Book Appointment",
+    "featuredTitle": "Popular Treatments",
+    "featuredSubtitle": "Discover therapeutic Thai massage for stress relief and back pain.",
+    "viewAllButton": "View All Services",
+    "aboutTitle": "Traditional Thai Massage in Bern",
+    "aboutText1": "Founded in 2026 by Mrs. Kumjuan Vecchi, Suksan Massage brings authentic Thai healing arts to Bern, Switzerland.",
+    "aboutText2": "Experience the benefits of traditional Nuad Thai massage in a serene environment designed for relaxation.",
+    "aboutText3": "Professionalism is our priority. Mrs. Vecchi is certified by the famous <bold>Wat Pho Thai Traditional Medical School</bold> in Bangkok.",
+    "aboutText4": "All our therapists are certified experts with over <bold>10 years of experience</bold>. Relax in our 'Rose & Forest' ambiance.",
+    "meetTeamButton": "Meet Our Team"
+  },
+  "Services": {
+    "title": "Our Services",
+    "subtitle": "Experience the art of prepared relaxation with our authentic treatments.",
+    "bookButton": "Book Now",
+    "thai": {
+      "title": "Traditional Thai Massage",
+      "description": "A therapeutic massage that combines acupressure, Indian Ayurvedic principles, and assisted yoga postures. Perfect for relieving muscle tension and improving flexibility."
+    },
+    "oil": {
+      "title": "Oil Massage",
+      "description": "A gentle and relaxing massage using aromatic oils to soothe the body and mind. Improves circulation and relieves stress."
+    },
+    "foot": {
+      "title": "Foot Reflexology",
+      "description": "Based on the principle that reflex points on the feet correspond to organs and glands in the body. Promotes overall health and well-being."
+    }
+  },
+  "Contact": {
+    "title": "Contact Us",
+    "subtitle": "Ready to relax? Send us a message or visit our spa in Bern.",
+    "locationHours": "Location & Hours",
+    "openingHours": "Opening Hours",
+    "mondayFriday": "Monday - Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "closed": "Closed",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone (Optional)",
+      "service": "Service",
+      "message": "Message",
+      "submit": "Send Message",
+      "selectService": "Select a service...",
+      "thai": "Traditional Thai Massage",
+      "oil": "Oil Massage",
+      "foot": "Foot Reflexology",
+      "other": "Other Inquiry",
+      "success": "Thank you for your message! We will contact you shortly."
+    }
+  }
+}

@@ -1,5 +1,5 @@
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL = "https://demo.once-ui.com";
+const baseURL = "https://suksan-massage.ch";
 
 // Import and set font for each variant
 import { Geist } from "next/font/google";
@@ -39,9 +39,9 @@ const fonts = {
 // default customization applied to the HTML in the main layout.tsx
 const style = {
   theme: "system", // dark | light | system
-  neutral: "gray", // sand | gray | slate | mint | rose | dusk | custom
-  brand: "blue", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
-  accent: "indigo", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
+  neutral: "sand", // sand | gray | slate | mint | rose | dusk | custom
+  brand: "rose", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
+  accent: "moss", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
   solid: "contrast", // color | contrast | inverse
   solidStyle: "flat", // flat | plastic
   border: "playful", // rounded | playful | conservative | sharp
@@ -68,13 +68,13 @@ const dataStyle = {
 const meta = {
   home: {
     path: "/",
-    title: "Once UI for Next.js",
+    title: "Suksan Massage - Authentic Thai Massage in Bern City",
     description:
-      "An open-source design system and component library for Next.js that emphasizes easy styling and accessibility in UI development.",
+      "Experience professional Nuad Thai and Oil Massage in Bern, Switzerland. Certified therapists for back pain relief and relaxation.",
     image: "/images/og/home.jpg",
-    canonical: "https://once-ui.com",
+    canonical: "https://suksan-massage.ch",
     robots: "index,follow",
-    alternates: [{ href: "https://once-ui.com", hrefLang: "en" }],
+    alternates: [{ href: "https://suksan-massage.ch", hrefLang: "de" }],
   },
   // add more routes and reference them in page.tsx
 };
@@ -82,17 +82,19 @@ const meta = {
 // default schema data
 const schema = {
   logo: "",
-  type: "Organization",
-  name: "Once UI",
+  type: "LocalBusiness",
+  name: "Suksan Massage",
   description: meta.home.description,
-  email: "lorant@once-ui.com",
+  email: "info@suksan-massage.ch",
 };
 
 // social links
 const social = {
-  twitter: "https://www.twitter.com/_onceui",
-  linkedin: "https://www.linkedin.com/company/once-ui/",
-  discord: "https://discord.com/invite/5EyAQ4eNdS",
+  twitter: "",
+  linkedin: "",
+  discord: "",
+  instagram: "https://www.instagram.com/suksanmassage",
+  facebook: "https://www.facebook.com/suksanmassage"
 };
 
 export { baseURL, fonts, style, meta, schema, social, dataStyle };

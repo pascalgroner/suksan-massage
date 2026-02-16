@@ -1,0 +1,29 @@
+/Users/pascal/development/WebSite-OnceUI/knowledge_base# Tasks
+
+- [x] Initialize Project Plan <!-- id: 0 -->
+  - [x] Create `implementation_plan.md` with required sections <!-- id: 1 -->
+  - [x] Create `knowledge_base` directory <!-- id: 2 -->
+- [x] Research & Setup <!-- id: 3 -->
+  - [x] Research `once-ui-system` and `shadcn/ui` integration <!-- id: 4 -->
+  - [x] Verify Next.js setup with TypeScript <!-- id: 5 -->
+- [x] Research Agent Tools & Skills <!-- id: 10 -->
+  - [x] Research Developer Agent tools (Next.js, TS, once-ui, shadcn) <!-- id: 11 -->
+  - [x] Research Designer Agent tools (Gemini, stock photos, styling) <!-- id: 12 -->
+  - [x] Research Tester Agent tools (Playwright, Jest, Vitest) <!-- id: 13 -->
+  - [x] Research SEO & Crawler Agent tools <!-- id: 14 -->
+  - [x] Research Documentation Agent tools <!-- id: 15 -->
+  - [x] Define Agent Profiles in Knowledge Base <!-- id: 16 -->
+- [x] Implementation Loop <!-- id: 6 -->
+  - [x] Initialize Next.js project <!-- id: 7 -->
+  - [x] Install dependencies <!-- id: 8 -->
+  - [x] Setup folder structure <!-- id: 9 -->
+- [x] Design & Layout Phase <!-- id: 23 -->
+  - [x] Configure Theme (Colors: Rose/Green, Fonts) <!-- id: 24 -->
+  - [x] Create Global Layout Components (Header, Footer) <!-- id: 25 -->
+  - [x] Implement Hero Section <!-- id: 26 -->
+  - [x] Implement Service Cards <!-- id: 27 -->
+  - [x] Implement Contact Form <!-- id: 28 -->
+- [ ] Refinement & Content <!-- id: 29 -->
+  - [x] Implement About Section (Home Page) <!-- id: 30 -->
+  - [ ] Review Mobile Responsiveness <!-- id: 31 -->
+  - [x] SEO Optimization <!-- id: 32 -->

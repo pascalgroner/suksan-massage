@@ -1,0 +1,61 @@
+Project Initialization
+
+Create me a full plan for the project optimized for multiple AI agents.
+
+Plan specifications:
+- This plan is written for the master agent (Agent 1 Project Manager and agent coordinator).
+- Projectname is "Suksan Massage".
+- The project get fully automated build by 6 agents working together.
+- Create a project folder for shared documentation used by the agents as knowledge base called knowledge_base.
+
+- Ensure the agents work together and coordinate with each other.
+- Ensure the sub agents work with optimized context information provided by the master agent.
+- Ensure the sub agents work with optimized set of tools and skills and resources provided by the master agent.
+- Ensure the sub agents work with a context window of about 50% of the total context window.
+- Ensure the master agents split the work and task into well sized portions for start the work for each sub agent
+- Ensure the documentation, knowledge base, project state is updated after each step and task by the agents.
+
+Agents and Skills
+- Search in Github for optimized tools and resources to staffe each agent.
+- Search in Github for optimized skills and agents.md to staffe each agent.
+- Each agent should have a specific skill set.
+- Each agent should have a specific role.
+- Each agent should have a specific set of tools.
+- Each agent should have a specific set of resources.
+
+List of agents:
+Agent 1: Project Manager and sub agent coordinator 
+Sub Agent 1: Developer
+  - Next.js
+  - TypeScript
+  - once-ui-system
+  - shadcn/ui
+Sub Agent 2: Web Designer and ressource Manager
+  - Picture generation with google gemini api
+  - search free/stock pictures, download and optimization
+  - web design, layout, components themes
+Sub Agent 3: Application Tester
+Sub Agent 4: SEO and AI Crawler Optimizer
+Sub Agent 5: Document searcher and Documentation Writer
+
+
+The plan have to have the following sections:
+1. Project Overview
+2. Project Technical defintions and Requirements
+3. Project Agents Setup
+3.1 Check and install dependencies and frameworks
+3.2 setup multiple agents for the project
+3.3 setup automatic testing for the project
+3.4 setup automatic deployment for the project
+4. Design and Layout
+4.1 components
+4.2 pages
+4.3 styles
+4.4 theme
+5. Project Development
+6. Project Testing
+7. Project Deployment
+
+
+
+

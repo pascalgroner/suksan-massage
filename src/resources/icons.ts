@@ -2,11 +2,26 @@ import { IconType } from "react-icons";
 
 import {
   HiOutlineRocketLaunch,
+  HiOutlineClock,
+  HiOutlineBanknotes,
+  HiOutlineMapPin,
+  HiOutlinePhone,
+  HiOutlineEnvelope,
 } from "react-icons/hi2";
-
+import {
+  FaInstagram,
+  FaFacebook,
+} from "react-icons/fa";
 
 export const iconLibrary: Record<string, IconType> = {
   rocket: HiOutlineRocketLaunch,
+  instagram: FaInstagram,
+  facebook: FaFacebook,
+  time: HiOutlineClock,
+  price: HiOutlineBanknotes,
+  location: HiOutlineMapPin,
+  phone: HiOutlinePhone,
+  email: HiOutlineEnvelope,
 };
 
 export type IconLibrary = typeof iconLibrary;

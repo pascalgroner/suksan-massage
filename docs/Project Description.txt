@@ -1,0 +1,35 @@
+Project Description
+
+i want to create a website for a shop called "Suksan Massage".
+
+Suksan Massage is a massage shop located in Bern, Switzerland.
+
+The website should be modern, clean, and professional.
+It should be easy to navigate and understand.
+It should be responsive and work on all devices.
+It should be fast and efficient.
+It have to be SEO and AI Crawler optimized.
+It have to be accessible.
+It have to be full DSVGO compliant.
+
+Technical Framework:
+- Use Next.js
+- Use TypeScript
+- Use once-ui-system:  https://github.com/once-ui-system/nextjs-starter
+- Use Shadcn UI
+
+Design:
+- Use a clean, modern, and professional design.
+- Use a color scheme that is easy on the eyes and is related to massage.
+- The base color schema is rose flowers and forrest green
+- User free pictures from pexels.com and unsplash.com
+- Use a font that is easy to read but is optimized for Thai language and thai style.
+- Use a layout that is easy to navigate.
+- Mandatory use only components from once-ui-system and shadcn/ui
+- Create the complete styles as a themend version so i can easy change the theme for different color and fonts
+
+The website should have the following pages:
+- Home
+- Services
+- Contact
+- Imprint

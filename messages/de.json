@@ -1,0 +1,70 @@
+{
+  "Header": {
+    "home": "Home",
+    "services": "Angebote",
+    "contact": "Kontakt",
+    "title": "Suksan Massage"
+  },
+  "Footer": {
+    "home": "Home",
+    "services": "Angebote",
+    "contact": "Kontakt",
+    "imprint": "Impressum",
+    "copyright": "© {year} Suksan Massage. Alle Rechte vorbehalten."
+  },
+  "Home": {
+    "heroTitle": "Entspannen, Erholen, Regenerieren",
+    "heroSubtitle": "Authentische Thaimassage im Zentrum von Bern",
+    "bookButton": "Termin buchen",
+    "featuredTitle": "Beliebte Behandlungen",
+    "featuredSubtitle": "Entdecken Sie unsere gefragtesten Therapien gegen Stress und Rückenbeschwerden.",
+    "viewAllButton": "Alle Angebote anzeigen",
+    "aboutTitle": "Ihr Studio für Thaimassage in Bern",
+    "aboutText1": "Gegründet im Jahr 2026 von Frau Kumjuan Vecchi, bietet Suksan Massage authentische traditionelle Thaimassage direkt in der Stadt Bern.",
+    "aboutText2": "Inspiriert von der Leidenschaft, die therapeutischen Vorteile der Nuad Thai (Thai-Yoga-Massage) zu teilen, schuf Frau Vecchi einen Ort der Ruhe.",
+    "aboutText3": "Wir sind stolz auf unsere Professionalität. Frau Vecchi besitzt ein Diplom der renommierten <bold>Wat Pho Thai Traditional Medical School</bold> in Bangkok.",
+    "aboutText4": "Alle unsere Masseurinnen sind zertifiziert und bringen über <bold>10 Jahre Erfahrung</bold> mit. Geniessen Sie unsere entspannende Atmosphäre.",
+    "meetTeamButton": "Unser Team kennenlernen"
+  },
+  "Services": {
+    "title": "Unsere Angebote",
+    "subtitle": "Erleben Sie die Kunst der vorbereiteten Entspannung mit unseren authentischen Behandlungen.",
+    "bookButton": "Jetzt buchen",
+    "thai": {
+      "title": "Traditionelle Thai Massage",
+      "description": "Eine therapeutische Massage, die Akupressur, indische ayurvedische Prinzipien und unterstützte Yoga-Positionen kombiniert. Perfekt zur Linderung von Muskelverspannungen und zur Verbesserung der Flexibilität."
+    },
+    "oil": {
+      "title": "Öl Massage",
+      "description": "Eine sanfte und entspannende Massage mit aromatischen Ölen zur Beruhigung von Körper und Geist. Fördert die Durchblutung und lindert Stress."
+    },
+    "foot": {
+      "title": "Fussreflexzonen Massage",
+      "description": "Basiert auf dem Prinzip, dass Reflexpunkte an den Füssen Organen und Drüsen im Körper entsprechen. Fördert das allgemeine Wohlbefinden."
+    }
+  },
+  "Contact": {
+    "title": "Kontaktieren Sie uns",
+    "subtitle": "Bereit für Entspannung? Senden Sie uns eine Nachricht oder besuchen Sie unser Spa in Bern.",
+    "locationHours": "Standort & Öffnungszeiten",
+    "openingHours": "Öffnungszeiten",
+    "mondayFriday": "Montag - Freitag",
+    "saturday": "Samstag",
+    "sunday": "Sonntag",
+    "closed": "Geschlossen",
+    "form": {
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon (Optional)",
+      "service": "Behandlung",
+      "message": "Nachricht",
+      "submit": "Nachricht senden",
+      "selectService": "Wählen Sie eine Behandlung...",
+      "thai": "Traditionelle Thai Massage",
+      "oil": "Öl Massage",
+      "foot": "Fussreflexzonen Massage",
+      "other": "Andere Anfrage",
+      "success": "Vielen Dank für Ihre Nachricht! Wir werden uns in Kürze bei Ihnen melden."
+    }
+  }
+}
