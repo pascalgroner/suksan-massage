@@ -18,14 +18,49 @@ export const ContactForm = () => {
     message: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert(t("success"));
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      setSubmitStatus('success');
+      alert(t("success"));
+      
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitStatus('error');
+      alert("Error sending message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -48,6 +83,7 @@ export const ContactForm = () => {
           onChange={handleChange}
           required
           autoComplete="name"
+          disabled={isSubmitting}
         />
       </Column>
 
@@ -61,6 +97,7 @@ export const ContactForm = () => {
           onChange={handleChange}
           required
           autoComplete="email"
+          disabled={isSubmitting}
         />
       </Column>
 
@@ -73,6 +110,7 @@ export const ContactForm = () => {
           value={formData.phone}
           onChange={handleChange}
           autoComplete="tel"
+          disabled={isSubmitting}
         />
       </Column>
 
@@ -83,6 +121,7 @@ export const ContactForm = () => {
           name="service"
           value={formData.service}
           onChange={handleChange}
+          disabled={isSubmitting}
           style={{
             padding: "var(--static-space-12)",
             background: "var(--neutral-on-background-weak)",
@@ -107,6 +146,7 @@ export const ContactForm = () => {
           name="message"
           value={formData.message}
           onChange={handleChange}
+          disabled={isSubmitting}
           rows={4}
           style={{
             padding: "var(--static-space-12)",
@@ -121,8 +161,20 @@ export const ContactForm = () => {
         />
       </Column>
 
-      <Button type="submit" variant="primary" fillWidth>
-        {t("submit")}
+      {submitStatus === 'error' && (
+        <Text variant="body-default-s" onBackground="danger-medium">
+          Something went wrong. Please try again or contact us directly.
+        </Text>
+      )}
+
+      <Button 
+        type="submit" 
+        variant="primary" 
+        fillWidth
+        loading={isSubmitting}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? "Sending..." : t("submit")}
       </Button>
     </Column>
   );

@@ -66,5 +66,16 @@
       "other": "Other Inquiry",
       "success": "Thank you for your message! We will contact you shortly."
     }
+  },
+  "Faq": {
+    "title": "Frequently Asked Questions",
+    "q1": "What is the difference between Oil and Thai Massage?",
+    "a1": "Thai Massage is performed fully clothed on a floor mat and involves stretching and pressure points. Oil Massage is performed on a table with skin contact using aromatic oils for relaxation.",
+    "q2": "Does Thai Massage help with back pain?",
+    "a2": "Yes, targeted stretching and acupressure in Thai Massage are highly effective for relieving back tension and improving mobility.",
+    "q3": "Is Nuad Thai covered by insurance?",
+    "a3": "Please check with your supplementary health insurance provider. While we are certified, coverage policies vary.",
+    "q4": "What should I wear?",
+    "a4": "For Thai Massage, we provide comfortable traditional clothing. For Oil Massage, standard draping procedures are used to ensure your privacy and comfort."
   }
 }

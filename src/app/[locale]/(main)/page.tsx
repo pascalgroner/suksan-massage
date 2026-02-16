@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Link } from "@/navigation"; // Use localized Link
 import { ServiceCard } from "@/components/ServiceCard";
 import { useTranslations } from "next-intl";
+import { Faq } from "@/components/Faq";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -159,6 +160,8 @@ export default function Home() {
           </div>
         </Flex>
       </Column>
+      {/* FAQ Section */}
+      <Faq />
     </Column>
   );
 }

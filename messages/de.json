@@ -66,5 +66,16 @@
       "other": "Andere Anfrage",
       "success": "Vielen Dank für Ihre Nachricht! Wir werden uns in Kürze bei Ihnen melden."
     }
+  },
+  "Faq": {
+    "title": "Häufig gestellte Fragen",
+    "q1": "Was ist der Unterschied zwischen Öl- und Thaimassage?",
+    "a1": "Thaimassage wird bekleidet auf einer Bodenmatte durchgeführt und beinhaltet Dehnungen und Druckpunkte. Ölmassage findet auf einer Liege mit Hautkontakt und aromatischen Ölen zur Entspannung statt.",
+    "q2": "Hilft Thaimassage bei Rückenschmerzen?",
+    "a2": "Ja, gezielte Dehnungen und Akupressur in der Thaimassage sind sehr effektiv zur Linderung von Rückenverspannungen und zur Verbesserung der Beweglichkeit.",
+    "q3": "Ist Nuad Thai krankenkassenanerkannt?",
+    "a3": "Bitte erkundigen Sie sich bei Ihrer Zusatzversicherung. Obwohl wir zertifiziert sind, variieren die Deckungsrichtlinien.",
+    "q4": "Was soll ich anziehen?",
+    "a4": "Für die Thaimassage stellen wir bequeme traditionelle Kleidung zur Verfügung. Bei der Ölmassage werden Standard-Abdeckverfahren angewendet, um Ihre Privatsphäre und Ihren Komfort zu gewährleisten."
   }
 }
