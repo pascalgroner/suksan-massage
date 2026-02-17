@@ -77,7 +77,12 @@
       "foot": "Fussreflex Massage",
       "back": "Rücken- & Nackenmassage",
       "other": "Andere Anfrage",
-      "success": "Vielen Dank für Ihre Nachricht! Wir werden uns in Kürze bei Ihnen melden."
+      "success": "Vielen Dank für Ihre Nachricht! Wir werden uns in Kürze bei Ihnen melden.",
+      "name_required": "Name ist erforderlich",
+      "phone_required": "Telefonnummer ist erforderlich",
+      "phone_invalid": "Ungültiges Format",
+      "service_required": "Bitte wählen Sie eine Behandlung",
+      "phone_example": "z.B. 079 123 45 67 oder +41 79 123 45 67"
     }
   },
   "Faq": {
@@ -109,12 +114,12 @@
     "address": "Weingartstrasse 57 UG, 3014 Bern"
   },
   "OpeningHours": {
-    "mondayFriday": "10:00 - 20:00",
-    "saturday": "10:00 - 18:00",
+    "mondayFriday": "09:00 - 22:00",
+    "saturday": "09:00 - 22:00",
     "sunday": "Geschlossen"
   },
   "Banner": {
-    "active": true,
+    "active": false,
     "text": "Wir sind noch nicht im Urlaub. Der Shop ist geschlossen von 05.07.2026 bis 31.07.2026"
   }
 }

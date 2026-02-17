@@ -3,6 +3,9 @@ import { ContactForm } from "@/components/ContactForm";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
+import fs from "fs";
+import path from "path";
+
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -13,10 +16,21 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
+
 export default async function ContactPage() {
   const t = await getTranslations("Contact");
   const tGeneral = await getTranslations("General");
   const tHours = await getTranslations("OpeningHours");
+
+  const configPath = path.join(process.cwd(), "src", "resources", "config.json");
+  let config = { openingHours: { start: "09:00", end: "22:00" }, serviceDuration: { default: 60 } };
+  try {
+      if (fs.existsSync(configPath)) {
+          config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+      }
+  } catch (e) {
+      console.error("Failed to load config", e);
+  }
 
   return (
     <Column fillWidth padding="l" gap="xl" horizontal="center">
@@ -93,7 +107,7 @@ export default async function ContactPage() {
         {/* Contact Form */}
         <Column fillWidth style={{ flex: 1, minWidth: "300px" }}>
           <Suspense fallback={<Column padding="l" center><Text>Loading form...</Text></Column>}>
-            <ContactForm />
+            <ContactForm config={config} />
           </Suspense>
         </Column>
       </Flex>

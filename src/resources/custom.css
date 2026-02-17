@@ -1,69 +1,137 @@
-/* :root {
+:root {
   /*
-  /* Override default variables here */
+  /* Forrest Green (Brand) - Rich, natural, premium
+  /* Generated for 'Forest Green' base #228B22 
   /*
-  --font-size-display-multiplier:   1;
-  --font-size-heading-multiplier:   1;
-  --font-size-body-multiplier:      1;
-  --font-size-label-multiplier:     1;
-
-  --line-height-display-multiplier: 1;
-  --line-height-heading-multiplier: 1;
-  --line-height-body-multiplier:    1;
-  --line-height-label-multiplier:   1;
-
-  --default-border:        var(--neutral-border-medium);
+  --scheme-brand-100:  #ebf5eb;
+  --scheme-brand-200:  #d6ebd6;
+  --scheme-brand-300:  #ade0ad;
+  --scheme-brand-400:  #85d685;
+  --scheme-brand-500:  #5ccf5c;
+  --scheme-brand-600:  #2fbf2f; /* Vibrant Green */
+  --scheme-brand-700:  #248f24; /* Forest Green Base */
+  --scheme-brand-800:  #1a661a;
+  --scheme-brand-900:  #0f3d0f;
+  --scheme-brand-1000: #051405;
+  --scheme-brand-1100: #000000;
+  --scheme-brand-1200: #000000;
+  
+  --scheme-brand-alpha-100:  rgba(34, 139, 34, 0.05); /* very light tint */
+  --scheme-brand-alpha-200:  rgba(34, 139, 34, 0.1);
+  --scheme-brand-alpha-300:  rgba(34, 139, 34, 0.2);
+  --scheme-brand-alpha-400:  rgba(34, 139, 34, 0.3);
+  --scheme-brand-alpha-500:  rgba(34, 139, 34, 0.5);
+  --scheme-brand-alpha-600:  rgba(34, 139, 34, 0.6);
+  --scheme-brand-alpha-700:  rgba(34, 139, 34, 0.7);
+  --scheme-brand-alpha-800:  rgba(34, 139, 34, 0.8);
+  --scheme-brand-alpha-900:  rgba(34, 139, 34, 0.9);
 
   /*
-  /* Example setup for custom colors */
-  /* Generate at: https://once-ui.com/customize */
+  /* Rose (Neutral/Accent) - Warm, calming, pastel
+  /* Generated for 'Dusty Rose' base #C08081
   /*
-  --scheme-brand-100: #08002f;
-  --scheme-brand-200:  #04025c;
-  --scheme-brand-300:  #1f398e;
-  --scheme-brand-400:  #3856ae;
-  --scheme-brand-500:  #5071cc;
-  --scheme-brand-600:  #6f94f1;
-  --scheme-brand-700:  #8db3ff;
-  --scheme-brand-800:  #b2dbff;
-  --scheme-brand-900:  #bfe8ff;
-  --scheme-brand-1000: #ccf6ff;
-  --scheme-brand-1100: #d2fcff;
-  --scheme-brand-1200: #d2fcff;
-  --scheme-brand-600-10: rgba(111,148,241,0.1);
-  --scheme-brand-600-30: rgba(111,148,241,0.3);
-  --scheme-brand-600-50: rgba(111,148,241,0.5);
+  --scheme-accent-100:  #fcecec;
+  --scheme-accent-200:  #f9d9d9;
+  --scheme-accent-300:  #f2b3b3;
+  --scheme-accent-400:  #ec8c8c;
+  --scheme-accent-500:  #e66666;
+  --scheme-accent-600:  #df4040;
+  --scheme-accent-700:  #c08081; /* Dusty Rose Base */
+  --scheme-accent-800:  #996667;
+  --scheme-accent-900:  #734d4d;
+  --scheme-accent-1000: #4d3333;
+  --scheme-accent-1100: #261a1a;
+  --scheme-accent-1200: #0d0909;
 
-  --scheme-accent-100:  #030b10;
-  --scheme-accent-200:  #0d181d;
-  --scheme-accent-300:  #364248;
-  --scheme-accent-400:  #505d64;
-  --scheme-accent-500:  #69777e;
-  --scheme-accent-600:  #8a989f;
-  --scheme-accent-700:  #a8b7bf;
-  --scheme-accent-800:  #c8d7df;
-  --scheme-accent-900:  #d5e4ec;
-  --scheme-accent-1000: #e2f1f9;
-  --scheme-accent-1100: #e9f8ff;
-  --scheme-accent-1200: #efffff;
-  --scheme-accent-600-10: rgba(138,152,159,0.1);
-  --scheme-accent-600-30: rgba(138,152,159,0.3);
-  --scheme-accent-600-50: rgba(138,152,159,0.5);
+  --scheme-accent-alpha-100:  rgba(192, 128, 129, 0.05);
+  --scheme-accent-alpha-200:  rgba(192, 128, 129, 0.1);
+  --scheme-accent-alpha-300:  rgba(192, 128, 129, 0.2);
+  --scheme-accent-alpha-400:  rgba(192, 128, 129, 0.3);
+  --scheme-accent-alpha-500:  rgba(192, 128, 129, 0.5);
+  --scheme-accent-alpha-600:  rgba(192, 128, 129, 0.6);
+  --scheme-accent-alpha-700:  rgba(192, 128, 129, 0.7);
+  --scheme-accent-alpha-800:  rgba(192, 128, 129, 0.8);
+  --scheme-accent-alpha-900:  rgba(192, 128, 129, 0.9);
 
-  --scheme-neutral-100:  #020b10;
-  --scheme-neutral-200:  #0b181d;
-  --scheme-neutral-300:  #344248;
-  --scheme-neutral-400:  #4f5d64;
-  --scheme-neutral-500:  #68777e;
-  --scheme-neutral-600:  #89989f;
-  --scheme-neutral-700:  #a7b7be;
-  --scheme-neutral-800:  #c7d7df;
-  --scheme-neutral-900:  #d4e4ec;
-  --scheme-neutral-1000: #e1f2f9;
-  --scheme-neutral-1100: #e7f8ff;
-  --scheme-neutral-1200: #eeffff;
-  --scheme-neutral-600-10: rgba(137,152,159,0.1);
-  --scheme-neutral-600-30: rgba(137,152,159,0.3);
-  --scheme-neutral-600-50: rgba(137,152,159,0.5);
-  /*
-}*/
+  /* Using Neutral as a cooler, off-white/gray-rose for backgrounds to avoid being too "whitish" */
+  /* We want a warm, rose-tinted neutral */
+  --scheme-neutral-100:  #fffafa; /* Snow/Rose white */
+  --scheme-neutral-200:  #fdf2f2;
+  --scheme-neutral-300:  #fae6e6; /* Lighter Rose */
+  --scheme-neutral-400:  #f5d0d0;
+  --scheme-neutral-500:  #f0baba;
+  --scheme-neutral-600:  #eba4a4; 
+  --scheme-neutral-700:  #c08081; /* Matching accent base */
+  --scheme-neutral-800:  #996667;
+  --scheme-neutral-900:  #734d4d;
+  --scheme-neutral-1000: #4d3333;
+  --scheme-neutral-1100: #261a1a;
+  --scheme-neutral-1200: #0d0909;
+
+  --scheme-neutral-alpha-100:  rgba(192, 128, 129, 0.05);
+  --scheme-neutral-alpha-200:  rgba(192, 128, 129, 0.1);
+  --scheme-neutral-alpha-300:  rgba(192, 128, 129, 0.2);
+  --scheme-neutral-alpha-400:  rgba(192, 128, 129, 0.3);
+  --scheme-neutral-alpha-500:  rgba(192, 128, 129, 0.5);
+  --scheme-neutral-alpha-600:  rgba(192, 128, 129, 0.6);
+  --scheme-neutral-alpha-700:  rgba(192, 128, 129, 0.7);
+  --scheme-neutral-alpha-800:  rgba(192, 128, 129, 0.8);
+  --scheme-neutral-alpha-900:  rgba(192, 128, 129, 0.9);
+
+  /* Global Colors */
+}
+
+/* Global Utility Classes */
+.glass-panel {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: var(--neutral-alpha-medium);
+  border: 1px solid var(--neutral-alpha-weak);
+}
+
+.card-hover {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-l);
+}
+
+.hover-scale {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Form Controls */
+.form-control {
+  padding: var(--static-space-12);
+  border-radius: var(--radius-m);
+  border: 1px solid var(--neutral-alpha-medium);
+  background: var(--neutral-surface);
+  color: var(--neutral-on-background-strong);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-default-m);
+  width: 100%;
+  height: 48px;
+  color-scheme: dark; /* For date/time pickers */
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  border-color: var(--brand-strong);
+}
+
+.form-control.error {
+  border-color: var(--danger-medium);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 80px;
+  resize: vertical;
+}

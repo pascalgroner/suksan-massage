@@ -77,7 +77,12 @@
       "foot": "Foot Reflexology Massage",
       "back": "Back & Neck Massage",
       "other": "Other Inquiry",
-      "success": "Thank you for your message! We will contact you shortly."
+      "success": "Thank you for your message! We will contact you shortly.",
+      "name_required": "Name is required",
+      "phone_required": "Phone number is required",
+      "phone_invalid": "Invalid phone format",
+      "service_required": "Please select a service",
+      "phone_example": "e.g. 079 123 45 67 or +41 79 123 45 67"
     }
   },
   "Faq": {
@@ -109,12 +114,12 @@
     "address": "Weingartstrasse 57 UG, 3014 Bern"
   },
   "OpeningHours": {
-    "mondayFriday": "10:00 - 20:00",
-    "saturday": "10:00 - 18:00",
+    "mondayFriday": "09:00 - 22:00",
+    "saturday": "09:00 - 22:00",
     "sunday": "Closed"
   },
   "Banner": {
-    "active": true,
+    "active": false,
     "text": "We are now not in holiday. The shop is closed from 05.07.2026 to 31.07.2026"
   }
 }

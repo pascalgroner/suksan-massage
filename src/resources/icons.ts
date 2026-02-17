@@ -7,6 +7,10 @@ import {
   HiOutlineMapPin,
   HiOutlinePhone,
   HiOutlineEnvelope,
+  HiOutlineSun,
+  HiOutlineMoon,
+  HiOutlineBars3,
+  HiOutlineXMark,
 } from "react-icons/hi2";
 import {
   FaInstagram,
@@ -22,6 +26,10 @@ export const iconLibrary: Record<string, IconType> = {
   location: HiOutlineMapPin,
   phone: HiOutlinePhone,
   email: HiOutlineEnvelope,
+  sun: HiOutlineSun,
+  moon: HiOutlineMoon,
+  menu: HiOutlineBars3,
+  close: HiOutlineXMark,
 };
 
 export type IconLibrary = typeof iconLibrary;

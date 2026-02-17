@@ -97,12 +97,11 @@ export default function Home() {
           gap="l"
           style={{ maxWidth: "800px", textAlign: "center" }}
         >
-          <Heading variant="display-strong-xl" style={{ color: "white" }}>
+          <Heading variant="display-strong-xl">
             {t("heroTitle")}
           </Heading>
           <Text
             variant="heading-default-xl"
-            style={{ color: "var(--neutral-on-background-medium)" }}
             wrap="balance"
           >
             {t("heroSubtitle")}
@@ -206,7 +205,7 @@ export default function Home() {
           <div style={{ flex: 1, minWidth: "300px", position: "relative", aspectRatio: "4/3" }}>
             <Image
               src="/images/team.png"
-              alt="Mrs. Kumjuan Vecchi and the Suksan Massage Team"
+              alt="Professional Thai Massage Therapists at Suksan Massage"
               fill
               style={{ objectFit: "cover", borderRadius: "var(--radius-l)" }}
             />

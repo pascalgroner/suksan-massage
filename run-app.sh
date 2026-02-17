@@ -15,6 +15,12 @@ else
   echo "✅  No existing instances found on port $PORT."
 fi
 
+# Clean cache and artifacts
+echo "🧹 Cleaning cache and artifacts..."
+rm -rf .next
+rm -rf node_modules/.cache
+echo "✅  Cache cleaned."
+
 echo "🚀 Starting Suksan Massage App..."
 echo "📝 Logging will be displayed in this console."
 echo "🌍 App should be available at http://localhost:$PORT"

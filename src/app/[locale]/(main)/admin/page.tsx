@@ -137,6 +137,53 @@ export default function AdminPage() {
     return current || "";
   };
 
+  const getConfigVal = (path: string[]) => {
+      if (!translations.config) return "";
+      let current = translations.config;
+      for (const key of path) {
+        if (current === undefined || current === null) return "";
+        current = current[key];
+      }
+      return current || "";
+  };
+
+  const updateOpeningHours = (field: 'start' | 'end', value: string) => {
+    setTranslations((prev: any) => {
+        const newState = JSON.parse(JSON.stringify(prev));
+        
+        // Update config
+        if (!newState.config) newState.config = {};
+        if (!newState.config.openingHours) newState.config.openingHours = { start: "09:00", end: "22:00" };
+        
+        newState.config.openingHours[field] = value;
+        
+        const start = newState.config.openingHours.start;
+        const end = newState.config.openingHours.end;
+        const range = `${start} - ${end}`;
+        
+        // Update translations
+        if (!newState.de.OpeningHours) newState.de.OpeningHours = {};
+        newState.de.OpeningHours.mondayFriday = range;
+        newState.de.OpeningHours.saturday = range;
+        
+        if (!newState.en.OpeningHours) newState.en.OpeningHours = {};
+        newState.en.OpeningHours.mondayFriday = range;
+        newState.en.OpeningHours.saturday = range;
+        
+        return newState;
+    });
+  };
+
+  const updateServiceDuration = (val: string) => {
+      setTranslations((prev: any) => {
+        const newState = JSON.parse(JSON.stringify(prev));
+        if (!newState.config) newState.config = {};
+        if (!newState.config.serviceDuration) newState.config.serviceDuration = { default: 60 };
+        newState.config.serviceDuration.default = parseInt(val, 10);
+        return newState;
+      });
+  };
+
   if (!isAuthenticated) {
     return (
       <Column fillWidth padding="xl" center style={{ minHeight: "80vh" }}>
@@ -168,6 +215,44 @@ export default function AdminPage() {
       
       <Flex gap="xl" wrap style={{ maxWidth: "1000px", width: "100%" }} direction="column">
         
+        {/* Global Configuration */}
+        <Column fillWidth gap="m" background="surface" padding="l" radius="l" border="neutral-alpha-weak">
+            <Heading variant="heading-strong-s">System Configuration</Heading>
+            <Flex gap="l" wrap>
+                <Column gap="xs" style={{ minWidth: "200px" }}>
+                    <Text variant="label-strong-s">Opening Hours</Text>
+                    <Flex gap="m">
+                        <Input 
+                            id="opening-start"
+                            label="Start Time"
+                            type="time"
+                            value={getConfigVal(['openingHours', 'start'])}
+                            onChange={(e) => updateOpeningHours('start', e.target.value)}
+                        />
+                        <Input 
+                            id="opening-end"
+                            label="End Time"
+                            type="time"
+                            value={getConfigVal(['openingHours', 'end'])}
+                            onChange={(e) => updateOpeningHours('end', e.target.value)}
+                        />
+                    </Flex>
+                    <Text variant="body-default-xs" onBackground="neutral-weak">Updates Mon-Sat times automatically.</Text>
+                </Column>
+                
+                <Column gap="xs" style={{ minWidth: "200px" }}>
+                    <Text variant="label-strong-s">Service Defaults</Text>
+                    <Input 
+                        id="service-duration"
+                        label="Default Duration (min)"
+                        type="number"
+                        value={getConfigVal(['serviceDuration', 'default'])}
+                        onChange={(e) => updateServiceDuration(e.target.value)}
+                    />
+                </Column>
+            </Flex>
+        </Column>
+
         {/* Banner Settings */}
         <Column fillWidth gap="m" background="surface" padding="l" radius="l" border="neutral-alpha-weak">
           <Heading variant="heading-strong-s">Announcement Banner</Heading>
@@ -213,9 +298,12 @@ export default function AdminPage() {
             <Column gap="m" background="surface" padding="l" radius="l" border="neutral-alpha-weak" style={{ flex: 1, minWidth: "300px" }}>
             <Heading variant="heading-strong-s">General Info</Heading>
             <Input id="contact-phone" label="Phone Number" value={getVal('de', ['General', 'phone'])} onChange={(e) => { updateTranslation('de', ['General', 'phone'], e.target.value); updateTranslation('en', ['General', 'phone'], e.target.value); }} />
-            <Input id="hours-monfri" label="Mon - Fri" value={getVal('de', ['OpeningHours', 'mondayFriday'])} onChange={(e) => { updateTranslation('de', ['OpeningHours', 'mondayFriday'], e.target.value); updateTranslation('en', ['OpeningHours', 'mondayFriday'], e.target.value); }} />
-            <Input id="hours-sat" label="Saturday" value={getVal('de', ['OpeningHours', 'saturday'])} onChange={(e) => { updateTranslation('de', ['OpeningHours', 'saturday'], e.target.value); updateTranslation('en', ['OpeningHours', 'saturday'], e.target.value); }} />
-            <Input id="hours-sun" label="Sunday (Text)" value={getVal('de', ['OpeningHours', 'sunday'])} onChange={(e) => updateTranslation('de', ['OpeningHours', 'sunday'], e.target.value)} />
+            
+            <Text variant="label-strong-s" style={{ marginTop: "8px" }}>Opening Hours (Synced)</Text>
+            <Input id="hours-monfri" label="Mon - Fri" value={getVal('de', ['OpeningHours', 'mondayFriday'])} disabled readOnly />
+            <Input id="hours-sat" label="Saturday" value={getVal('de', ['OpeningHours', 'saturday'])} disabled readOnly />
+            
+            <Input id="hours-sun" label="Sunday (Text)" value={getVal('de', ['OpeningHours', 'sunday'])} onChange={(e) => updateTranslation('de', ['OpeningHours', 'sunday'], e.target.value)} style={{ marginTop: "8px" }} />
             </Column>
         </Flex>
 
@@ -283,6 +371,21 @@ export default function AdminPage() {
                 downloadAnchorNode.click();
                 downloadAnchorNode.remove();
             }} size="l">Download Backup</Button>
+            
+            <Button variant="danger" size="l" onClick={async () => {
+                if(confirm("Are you sure you want to reset the daily message limit logic?")) {
+                    setLoading(true);
+                    try {
+                        const res = await fetch("/api/admin/reset-counter", { method: "POST" });
+                        if (res.ok) alert("Counter reset successfully.");
+                        else alert("Failed to reset counter.");
+                    } catch (e) {
+                        alert("Error resetting counter.");
+                    } finally {
+                        setLoading(false);
+                    }
+                }
+            }}>Reset Daily Limit</Button>
         </Flex>
       </Flex>
     </Column>

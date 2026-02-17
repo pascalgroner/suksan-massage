@@ -2,10 +2,23 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect, useMemo } from "react";
-import { Column, Button, Flex, Text, Input } from "@once-ui-system/core";
+import { Column, Button, Flex, Text, Input, Heading } from "@once-ui-system/core";
 import { useTranslations } from "next-intl";
 
-export const ContactForm = () => {
+
+interface ContactFormProps {
+  config: {
+    openingHours: {
+      start: string;
+      end: string;
+    };
+    serviceDuration: {
+      default: number;
+    };
+  };
+}
+
+export const ContactForm = ({ config }: ContactFormProps) => {
   const searchParams = useSearchParams();
   const initialService = searchParams.get("service") || "";
   const t = useTranslations("Contact.form");
@@ -28,37 +41,59 @@ export const ContactForm = () => {
   useEffect(() => {
     const now = new Date();
     const currentHour = now.getHours();
-    const closingHour = 20; 
-    const openingHour = 10;
+    const currentMinutes = now.getMinutes();
+
+    const openingTimeParts = config.openingHours.start.split(':');
+    const closingTimeParts = config.openingHours.end.split(':');
     
+    const openingHour = parseInt(openingTimeParts[0], 10);
+    const closingHour = parseInt(closingTimeParts[0], 10);
+    const defaultDuration = config.serviceDuration.default; // Default duration in minutes
+
     let targetDate = now;
     let targetTimeStr = "";
 
-    // Check if we are past closing time or close to it
+    // Helper to format time
+    const formatTime = (date: Date) => {
+        const h = date.getHours().toString().padStart(2, '0');
+        const m = date.getMinutes().toString().padStart(2, '0');
+        return `${h}:${m}`;
+    };
+
+    // First check: Are we already past closing time?
     if (currentHour >= closingHour) {
         // Move to tomorrow
         targetDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-        targetTimeStr = `${openingHour.toString().padStart(2, '0')}:00`;
+        targetTimeStr = config.openingHours.start;
     } else {
-        // We are within today (or before opening)
-        if (currentHour < openingHour) {
-            targetTimeStr = `${openingHour.toString().padStart(2, '0')}:00`;
+        // Calculate earliest possible slot today based on buffer
+        // 15 min buffer + round to next 15 min
+        const bufferTime = new Date(now.getTime() + 15 * 60000);
+        const m = bufferTime.getMinutes();
+        const remain = 15 - (m % 15);
+        const nextSlot = new Date(bufferTime.getTime() + (remain === 15 ? 0 : remain) * 60000);
+        
+        // Check if this slot start is before opening time (if now is very early)
+        if (nextSlot.getHours() < openingHour) {
+             nextSlot.setHours(openingHour, 0, 0, 0);
+        }
+
+        // Calculate end time of this potential slot
+        const potentialEndTime = new Date(nextSlot.getTime() + defaultDuration * 60000);
+        
+        // Check if the service would end after closing time
+        // We compare the end time hour/minute with closing hour
+        // If potentialEndTime > closingHour:00
+        const closingDate = new Date(nextSlot);
+        closingDate.setHours(closingHour, 0, 0, 0);
+
+        if (potentialEndTime > closingDate) {
+             // Too late for today, move to tomorrow
+             targetDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+             targetTimeStr = config.openingHours.start;
         } else {
-            // Find next slot: now + 15 min buffer, then round up to next 15 min
-            const bufferTime = new Date(now.getTime() + 15 * 60000);
-            const m = bufferTime.getMinutes();
-            const remain = 15 - (m % 15);
-            const nextSlot = new Date(bufferTime.getTime() + (remain === 15 ? 0 : remain) * 60000);
-            
-            // If calculated slot is past closing, move to tomorrow
-            if (nextSlot.getHours() >= closingHour) {
-                 targetDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-                 targetTimeStr = `${openingHour.toString().padStart(2, '0')}:00`;
-            } else {
-                 const h = nextSlot.getHours().toString().padStart(2, '0');
-                 const inst = nextSlot.getMinutes().toString().padStart(2, '0');
-                 targetTimeStr = `${h}:${inst}`;
-            }
+             // Valid slot for today
+             targetTimeStr = formatTime(nextSlot);
         }
     }
     
@@ -71,7 +106,9 @@ export const ContactForm = () => {
 
   const timeSlots = useMemo(() => {
     const slots = [];
-    for (let h = 9; h < 21; h++) {
+    const startHour = parseInt(config.openingHours.start.split(':')[0], 10);
+    const endHour = parseInt(config.openingHours.end.split(':')[0], 10);
+    for (let h = startHour; h < endHour; h++) {
         for (let m = 0; m < 60; m += 15) {
             slots.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
         }
@@ -83,8 +120,29 @@ export const ContactForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validatePoints = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!formData.name.trim()) newErrors.name = t("name_required");
+    const phoneTrimmed = formData.phone.replace(/\s+/g, '');
+    if (!phoneTrimmed) {
+        newErrors.phone = t("phone_required");
+    } else if (!/^(\+41|0041|0)[1-9][0-9]{8}$/.test(phoneTrimmed)) {
+        newErrors.phone = t("phone_invalid");
+    }
+    if (!formData.service) newErrors.service = t("service_required");
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validatePoints()) return;
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -102,7 +160,7 @@ export const ContactForm = () => {
       if (!response.ok) throw new Error('Failed to send message');
 
       setSubmitStatus('success');
-      alert(t("success"));
+      // No alert here, state change triggers UI update
       
       setFormData({
         name: "",
@@ -114,6 +172,7 @@ export const ContactForm = () => {
         duration: "60",
         message: "",
       });
+      setErrors({});
     } catch (error) {
       console.error("Error submitting form:", error);
       setSubmitStatus('error');
@@ -122,6 +181,62 @@ export const ContactForm = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (submitStatus === 'success') {
+    return (
+        <Column 
+            fillWidth 
+            padding="xl" 
+            gap="m" 
+            background="neutral-weak" 
+            radius="l" 
+            border="neutral-alpha-weak"
+            align="center"
+        >
+            <Flex 
+                width="64" 
+                height="64" 
+                radius="full" 
+                background="brand-medium" 
+                center
+                marginBottom="m"
+            >
+                <Text variant="heading-strong-xl" onBackground="neutral-strong">✓</Text>
+            </Flex>
+            <Heading variant="heading-strong-l" align="center">{t("success")}</Heading>
+            <Text variant="body-default-m" align="center" onBackground="neutral-medium">
+                We have received your request. Here are the details:
+            </Text>
+            
+            <Column fillWidth gap="xs" padding="m" background="surface" radius="m" border="neutral-alpha-weak" marginTop="m">
+                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">Service:</Text> <Text variant="body-strong-s">{formData.service}</Text></Flex>
+                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">Date:</Text> <Text variant="body-strong-s">{formData.date}</Text></Flex>
+                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">Time:</Text> <Text variant="body-strong-s">{formData.specificTime}</Text></Flex>
+                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">Duration:</Text> <Text variant="body-strong-s">{formData.duration} min</Text></Flex>
+            </Column>
+
+            <Button 
+                variant="secondary" 
+                style={{ marginTop: "var(--static-space-32)" }}
+                onClick={() => {
+                    setSubmitStatus('idle');
+                    setFormData({
+                        name: "",
+                        phone: "",
+                        service: "",
+                        date: new Date().toISOString().split("T")[0],
+                        timeRange: "morning",
+                        specificTime: "",
+                        duration: "60",
+                        message: "",
+                    });
+                }}
+            >
+                Send Another Request
+            </Button>
+        </Column>
+    );
+  }
 
   return (
     <Column
@@ -136,12 +251,35 @@ export const ContactForm = () => {
     >
       <Column gap="xs">
         <Text as="label" variant="label-default-s" onBackground="neutral-weak">{t("name")}</Text>
-        <Input id="name" name="name" value={formData.name} onChange={handleChange} required autoComplete="name" disabled={isSubmitting} />
+        <Input 
+            id="name" 
+            name="name" 
+            value={formData.name} 
+            onChange={handleChange} 
+            error={!!errors.name}
+            errorMessage={errors.name}
+            autoComplete="name" 
+            disabled={isSubmitting} 
+        />
       </Column>
 
       <Column gap="xs">
         <Text as="label" variant="label-default-s" onBackground="neutral-weak">{t("phone")}</Text>
-        <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} required pattern="^(\+41|0041|0)[1-9][0-9]{8}$" title="e.g., 079 123 45 67" autoComplete="tel" disabled={isSubmitting} />
+        <Input 
+            id="phone" 
+            name="phone" 
+            type="tel" 
+            value={formData.phone} 
+            onChange={handleChange} 
+            error={!!errors.phone}
+            errorMessage={errors.phone}
+            title={t("phone_example")}
+            autoComplete="tel" 
+            disabled={isSubmitting} 
+        />
+        <Text variant="body-default-xs" onBackground="neutral-weak" style={{ marginTop: "-var(--static-space-4)" }}>
+            {t("phone_example")}
+        </Text>
       </Column>
 
       <Flex fillWidth background="neutral-alpha-medium" marginTop="s" marginBottom="s" style={{ height: "1px" }} />
@@ -151,7 +289,15 @@ export const ContactForm = () => {
       <Flex gap="m" wrap>
         <Column gap="xs" style={{ flex: 1 }}>
             <Text as="label" variant="label-default-s">{t("selectDate")}</Text>
-            <Input id="date" name="date" type="date" value={formData.date} onChange={handleChange} required disabled={isSubmitting} style={{ colorScheme: "dark" }} />
+            <Input 
+                id="date" 
+                name="date" 
+                type="date" 
+                value={formData.date} 
+                onChange={handleChange} 
+                disabled={isSubmitting} 
+                style={{ colorScheme: "dark" }} 
+            />
         </Column>
         <Column gap="xs" style={{ flex: 1 }}>
             <Text as="label" variant="label-default-s">{t("duration")}</Text>
@@ -161,16 +307,8 @@ export const ContactForm = () => {
                 value={formData.duration} 
                 onChange={handleChange} 
                 disabled={isSubmitting} 
-                style={{ 
-                    padding: "var(--static-space-12)", 
-                    borderRadius: "var(--radius-m)", 
-                    border: "1px solid var(--neutral-alpha-medium)",
-                    background: "var(--neutral-surface)",
-                    color: "var(--neutral-on-background-strong)",
-                    fontFamily: "var(--font-body)",
-                    height: "48px",
-                    colorScheme: "dark"
-                }}>
+                className="form-control"
+            >
                 <option value="15">15 min</option>
                 <option value="30">30 min</option>
                 <option value="45">45 min</option>
@@ -190,16 +328,8 @@ export const ContactForm = () => {
                 value={formData.timeRange} 
                 onChange={handleChange} 
                 disabled={isSubmitting} 
-                style={{ 
-                    padding: "var(--static-space-12)", 
-                    borderRadius: "var(--radius-m)", 
-                    border: "1px solid var(--neutral-alpha-medium)",
-                    background: "var(--neutral-surface)",
-                    color: "var(--neutral-on-background-strong)",
-                    fontFamily: "var(--font-body)",
-                    height: "48px",
-                    colorScheme: "dark"
-                }}>
+                className="form-control"
+            >
                 <option value="morning">{t("morning")}</option>
                 <option value="afternoon">{t("afternoon")}</option>
                 <option value="evening">{t("evening")}</option>
@@ -213,16 +343,8 @@ export const ContactForm = () => {
                 value={formData.specificTime} 
                 onChange={handleChange} 
                 disabled={isSubmitting} 
-                style={{ 
-                    padding: "var(--static-space-12)", 
-                    borderRadius: "var(--radius-m)", 
-                    border: "1px solid var(--neutral-alpha-medium)",
-                    background: "var(--neutral-surface)",
-                    color: "var(--neutral-on-background-strong)",
-                    fontFamily: "var(--font-body)",
-                    height: "48px",
-                    colorScheme: "dark"
-                }}>
+                className="form-control"
+            >
                 {timeSlots.map(slot => (
                     <option key={slot} value={slot}>{slot}</option>
                 ))}
@@ -238,17 +360,7 @@ export const ContactForm = () => {
           value={formData.service}
           onChange={handleChange}
           disabled={isSubmitting}
-          style={{
-            padding: "var(--static-space-12)",
-            background: "var(--neutral-surface)",
-            border: "1px solid var(--neutral-alpha-medium)",
-            borderRadius: "var(--radius-m)",
-            color: "var(--neutral-on-background-strong)",
-            fontSize: "var(--font-size-body-default-m)",
-            fontFamily: "var(--font-body)",
-            height: "48px",
-            colorScheme: "dark"
-          }}
+          className={`form-control ${errors.service ? 'error' : ''}`}
         >
           <option value="">{t("selectService")}</option>
           <option value="thai">{t("thai")}</option>
@@ -257,6 +369,9 @@ export const ContactForm = () => {
           <option value="foot">{t("foot")}</option>
           <option value="other">{t("other")}</option>
         </select>
+        {errors.service && (
+            <Text variant="body-default-xs" onBackground="danger-medium">{errors.service}</Text>
+        )}
       </Column>
       
       <Column gap="xs">
@@ -268,17 +383,7 @@ export const ContactForm = () => {
           onChange={handleChange}
           disabled={isSubmitting}
           rows={3}
-          style={{
-            padding: "var(--static-space-12)",
-            background: "var(--neutral-surface)",
-            border: "1px solid var(--neutral-alpha-medium)",
-            borderRadius: "var(--radius-m)",
-            color: "var(--neutral-on-background-strong)",
-            fontSize: "var(--font-size-body-default-m)",
-            fontFamily: "var(--font-body)",
-            resize: "vertical",
-            minHeight: "80px",
-          }}
+          className="form-control"
         />
       </Column>
 

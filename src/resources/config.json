@@ -1,0 +1,9 @@
+{
+  "openingHours": {
+    "start": "09:00",
+    "end": "22:00"
+  },
+  "serviceDuration": {
+    "default": 60
+  }
+}

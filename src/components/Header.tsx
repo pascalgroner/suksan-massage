@@ -4,12 +4,14 @@ import { useState } from "react";
 import { Flex, Button, Text, Column, IconButton, MatrixFx } from "@once-ui-system/core";
 import { Link, usePathname } from "@/navigation";
 import { useTranslations } from "next-intl";
+import { useTheme } from "./Providers";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 export const Header = () => {
   const pathname = usePathname();
   const t = useTranslations("Header");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const navItems = [
     { label: t("home"), href: "/" },
@@ -38,7 +40,7 @@ export const Header = () => {
             size={32} // Large blocks for soft effect
             spacing={0}
             fps={10} // Slow animation
-            colors={["brand-medium", "neutral-medium"]} 
+            colors={["brand-medium", "accent-medium"]} 
             flicker={false}
         />
       </div>
@@ -61,11 +63,24 @@ export const Header = () => {
             </Button>
           </Link>
         ))}
+        <IconButton
+          onClick={toggleTheme}
+          variant="tertiary"
+          size="s"
+          icon={theme === "dark" ? "sun" : "moon"}
+          tooltip={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        />
         <LanguageSwitcher />
       </div>
 
       {/* Mobile Menu Button */}
       <div className="flex md:hidden items-center gap-2" style={{ zIndex: 1 }}>
+        <IconButton
+          onClick={toggleTheme}
+          variant="tertiary"
+          size="s"
+          icon={theme === "dark" ? "sun" : "moon"}
+        />
         <LanguageSwitcher />
         <Button
           onClick={() => setIsMenuOpen(!isMenuOpen)}

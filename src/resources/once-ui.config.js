@@ -1,25 +1,26 @@
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL = "https://suksan-massage.ch";
+const baseURL = "https://suksan-massage.com";
 
 // Import and set font for each variant
-import { Geist } from "next/font/google";
-import { Geist_Mono } from "next/font/google";
+import { Playfair_Display, Prompt, Geist_Mono } from "next/font/google";
 
-const heading = Geist({
+const heading = Playfair_Display({
   variable: "--font-heading",
   subsets: ["latin"],
   display: "swap",
 });
 
-const body = Geist({
+const body = Prompt({
   variable: "--font-body",
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  subsets: ["latin", "thai"],
   display: "swap",
 });
 
-const label = Geist({
+const label = Prompt({
   variable: "--font-label",
-  subsets: ["latin"],
+  weight: ["400", "600"],
+  subsets: ["latin", "thai"],
   display: "swap",
 });
 
@@ -38,9 +39,9 @@ const fonts = {
 
 // default customization applied to the HTML in the main layout.tsx
 const style = {
-  theme: "system", // dark | light | system
+  theme: "light", // dark | light | system
   neutral: "rose", // sand | gray | slate | mint | rose | dusk | custom
-  brand: "moss", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
+  brand: "emerald", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
   accent: "rose", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
   solid: "contrast", // color | contrast | inverse
   solidStyle: "flat", // flat | plastic

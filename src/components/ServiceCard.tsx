@@ -21,17 +21,17 @@ export const ServiceCard = ({
 }: ServiceCardProps) => {
   return (
     <Column
+      className="card-hover"
       fillWidth
       background="surface"
       border="neutral-alpha-weak"
       radius="l"
       overflow="hidden"
       style={{
-        transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
         height: "100%", // Ensure the card takes full height of the grid cell
       }}
     >
-      <div style={{ position: "relative", width: "100%", aspectRatio: "16/9" }}>
+      <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", flex: "none" }}>
         <Image
           src={imageSrc}
           alt={title}
