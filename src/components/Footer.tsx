@@ -28,11 +28,6 @@ export const Footer = () => {
             {t("home")}
           </Text>
         </Link>
-        <Link href="/services" style={{ textDecoration: "none" }}>
-          <Text variant="body-default-s" onBackground="neutral-medium">
-            {t("services")}
-          </Text>
-        </Link>
         <Link href="/contact" style={{ textDecoration: "none" }}>
           <Text variant="body-default-s" onBackground="neutral-medium">
             {t("contact")}

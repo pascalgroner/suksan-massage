@@ -16,7 +16,7 @@
     "heroTitle": "Entspannen, Erholen, Regenerieren",
     "heroSubtitle": "Authentische Thaimassage im Zentrum von Bern",
     "bookButton": "Termin buchen",
-    "featuredTitle": "Beliebte Behandlungen",
+    "featuredTitle": "Behandlungen",
     "featuredSubtitle": "Entdecken Sie unsere gefragtesten Therapien gegen Stress und Rückenbeschwerden.",
     "viewAllButton": "Alle Angebote anzeigen",
     "aboutTitle": "Ihr Studio für Thaimassage in Bern",
@@ -35,16 +35,20 @@
       "description": "Eine therapeutische Massage, die Akupressur, indische ayurvedische Prinzipien und unterstützte Yoga-Positionen kombiniert. Perfekt zur Linderung von Muskelverspannungen und zur Verbesserung der Flexibilität."
     },
     "oil": {
-      "title": "Öl Massage",
+      "title": "Öl und Relax Massage",
       "description": "Eine sanfte und entspannende Massage mit aromatischen Ölen zur Beruhigung von Körper und Geist. Fördert die Durchblutung und lindert Stress."
     },
     "foot": {
-      "title": "Fussreflexzonen Massage",
+      "title": "Fussreflex Massage",
       "description": "Basiert auf dem Prinzip, dass Reflexpunkte an den Füssen Organen und Drüsen im Körper entsprechen. Fördert das allgemeine Wohlbefinden."
+    },
+    "back": {
+      "title": "Rücken- & Nackenmassage",
+      "description": "Lösen Sie Verspannungen und Stress im Rücken und Nacken mit dieser gezielten Massage."
     }
   },
   "Contact": {
-    "title": "Kontaktieren Sie uns",
+    "title": "Besuchen Sie uns",
     "subtitle": "Bereit für Entspannung? Senden Sie uns eine Nachricht oder besuchen Sie unser Spa in Bern.",
     "locationHours": "Standort & Öffnungszeiten",
     "openingHours": "Öffnungszeiten",
@@ -55,7 +59,7 @@
     "form": {
       "name": "Name",
       "email": "E-Mail",
-      "phone": "Telefon (Optional)",
+      "phone": "Telefon",
       "service": "Behandlung",
       "message": "Nachricht",
       "submit": "Nachricht senden",
@@ -77,5 +81,31 @@
     "a3": "Bitte erkundigen Sie sich bei Ihrer Zusatzversicherung. Obwohl wir zertifiziert sind, variieren die Deckungsrichtlinien.",
     "q4": "Was soll ich anziehen?",
     "a4": "Für die Thaimassage stellen wir bequeme traditionelle Kleidung zur Verfügung. Bei der Ölmassage werden Standard-Abdeckverfahren angewendet, um Ihre Privatsphäre und Ihren Komfort zu gewährleisten."
+  },
+  "Pricing": {
+    "title": "Preisliste",
+    "subtitle": "Alle unsere Behandlungen (Thai, Öl, Fuss) folgen der gleichen Preisstruktur",
+    "min30": "30 Min",
+    "price30": "60.00 CHF",
+    "min45": "45 Min",
+    "price45": "80.00 CHF",
+    "min60": "60 Min",
+    "price60": "90.00 CHF",
+    "min90": "90 Min",
+    "price90": "130.00 CHF"
+  },
+  "General": {
+    "phone": "+41 76 259 05 33",
+    "email": "",
+    "address": "Weingartstrasse 57 UG, 3014 Bern"
+  },
+  "OpeningHours": {
+    "mondayFriday": "10:00 - 20:00",
+    "saturday": "10:00 - 18:00",
+    "sunday": "Geschlossen"
+  },
+  "Banner": {
+    "active": true,
+    "text": "Wir sind noch nicht im Urlaub. Der Shop ist geschlossen von 05.07.2026 bis 31.07.2026"
   }
 }

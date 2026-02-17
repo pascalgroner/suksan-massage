@@ -12,7 +12,6 @@ export const ContactForm = () => {
   
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     phone: "",
     service: initialService,
     message: "",
@@ -49,7 +48,6 @@ export const ContactForm = () => {
       // Reset form
       setFormData({
         name: "",
-        email: "",
         phone: "",
         service: "",
         message: "",
@@ -70,7 +68,7 @@ export const ContactForm = () => {
       fillWidth
       gap="m"
       padding="l"
-      background="surface"
+      background="neutral-weak"
       border="neutral-alpha-weak"
       radius="l"
     >
@@ -87,19 +85,6 @@ export const ContactForm = () => {
         />
       </Column>
 
-      <Column gap="xs">
-        <Text as="label" variant="label-default-s" onBackground="neutral-weak">{t("email")}</Text>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          autoComplete="email"
-          disabled={isSubmitting}
-        />
-      </Column>
 
       <Column gap="xs">
         <Text as="label" variant="label-default-s" onBackground="neutral-weak">{t("phone")}</Text>
@@ -109,6 +94,9 @@ export const ContactForm = () => {
           type="tel"
           value={formData.phone}
           onChange={handleChange}
+          required
+          pattern="^(\+41|0041|0)[1-9][0-9]{8}$"
+          title="Please enter a valid Swiss phone number (e.g., 079 123 45 67)"
           autoComplete="tel"
           disabled={isSubmitting}
         />

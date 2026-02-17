@@ -15,6 +15,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function ContactPage() {
   const t = await getTranslations("Contact");
+  const tGeneral = await getTranslations("General");
+  const tHours = await getTranslations("OpeningHours");
 
   return (
     <Column fillWidth padding="l" gap="xl" horizontal="center">
@@ -40,31 +42,29 @@ export default async function ContactPage() {
             <Column gap="s">
               <Flex gap="s" vertical="center">
                 <Icon name="location" onBackground="brand-medium" />
-                <Text>Musterstrasse 12, 3000 Bern</Text>
+                <Text>{tGeneral("address")}</Text>
               </Flex>
-              <Flex gap="s" vertical="center">
-                <Icon name="phone" onBackground="brand-medium" />
-                <Text>+41 31 123 45 67</Text>
-              </Flex>
-              <Flex gap="s" vertical="center">
-                <Icon name="email" onBackground="brand-medium" />
-                <Text>info@suksan-massage.ch</Text>
-              </Flex>
+              <a href={`tel:${tGeneral("phone").replace(/\s/g, "")}`} style={{ textDecoration: "none", color: "inherit" }}>
+                <Flex gap="s" vertical="center" style={{ cursor: "pointer" }}>
+                  <Icon name="phone" onBackground="brand-medium" />
+                  <Text>{tGeneral("phone")}</Text>
+                </Flex>
+              </a>
             </Column>
 
             <Column gap="xs" marginTop="m">
               <Text variant="label-default-s" onBackground="neutral-weak">{t("openingHours")}</Text>
               <Flex horizontal="between">
                 <Text>{t("mondayFriday")}</Text>
-                <Text>10:00 - 20:00</Text>
+                <Text>{tHours("mondayFriday")}</Text>
               </Flex>
               <Flex horizontal="between">
                 <Text>{t("saturday")}</Text>
-                <Text>10:00 - 18:00</Text>
+                <Text>{tHours("saturday")}</Text>
               </Flex>
               <Flex horizontal="between">
                 <Text>{t("sunday")}</Text>
-                <Text>{t("closed")}</Text>
+                <Text>{tHours("sunday")}</Text>
               </Flex>
             </Column>
           </Column>
@@ -79,7 +79,7 @@ export default async function ContactPage() {
             }}
           >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2724.312952474163!2d7.444975!3d46.947974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478e39d0c64c2ec3%3A0xa0f57c5f85e3b5e7!2sBern!5e0!3m2!1sen!2sch!4v1716300000000!5m2!1sen!2sch"
+              src="https://maps.google.com/maps?q=Weingartstrasse+57,3014+Bern&t=&z=15&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}

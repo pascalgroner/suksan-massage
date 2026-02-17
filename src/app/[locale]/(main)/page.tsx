@@ -6,38 +6,73 @@ import {
   Button,
   Column,
   Flex,
+  Icon,
 } from "@once-ui-system/core";
 import Image from "next/image";
 import { Link } from "@/navigation"; // Use localized Link
 import { ServiceCard } from "@/components/ServiceCard";
-import { useTranslations } from "next-intl";
+import { useTranslations, useMessages } from "next-intl";
 import { Faq } from "@/components/Faq";
 
 export default function Home() {
   const t = useTranslations("Home");
   const tServices = useTranslations("Services"); // Access services translations for titles
+  const tPricing = useTranslations("Pricing");
+  
+  const messages = useMessages();
+  const banner = (messages as any)?.Banner;
 
   const featuredServices = [
     {
       title: tServices("thai.title"),
       description: tServices("thai.description"),
       imageSrc: "/images/thai-massage.png",
-      price: "120 CHF",
-      duration: "60 min",
+      duration: "30 - 90 min",
       href: "/contact?service=thai",
     },
     {
       title: tServices("oil.title"),
       description: tServices("oil.description"),
       imageSrc: "/images/oil-massage.png",
-      price: "130 CHF",
-      duration: "60 min",
+      duration: "30 - 90 min",
       href: "/contact?service=oil",
+    },
+    {
+      title: tServices("back.title"),
+      description: tServices("back.description"),
+      imageSrc: "/images/back-massage.png",
+      duration: "30 - 60 min",
+      href: "/contact?service=back",
+    },
+    {
+      title: tServices("foot.title"),
+      description: tServices("foot.description"),
+      imageSrc: "/images/foot-massage.png", // Assuming this image exists or follows pattern
+      duration: "30 - 60 min",
+      href: "/contact?service=foot",
     },
   ];
 
   return (
     <Column fillWidth>
+      {/* Announcement Banner */}
+      {banner?.active && (
+        <Flex
+          fillWidth
+          padding="m"
+          horizontal="center"
+          vertical="center"
+          background="neutral-medium"
+          border="brand-medium"
+          gap="m"
+        >
+          <Icon name="info" onBackground="brand-strong" />
+          <Text variant="body-strong-m" style={{ color: "var(--brand-strong)" }} align="center">
+            {banner.text}
+          </Text>
+        </Flex>
+      )}
+
       {/* Hero Section */}
       <Column
         fillWidth
@@ -94,6 +129,30 @@ export default function Home() {
           </Text>
         </Column>
 
+        {/* Pricing Section - Moved Above Services */}
+        <Column fillWidth horizontal="center" gap="m" padding="m" background="neutral-weak" radius="l" style={{ maxWidth: "800px", marginBottom: "var(--static-space-32)" }}>
+            <Heading variant="heading-strong-m">{tPricing("title")}</Heading>
+            <Text variant="body-default-s" onBackground="neutral-weak">{tPricing("subtitle")}</Text>
+            <Flex gap="xl" wrap horizontal="center">
+                <Column align="center">
+                    <Text variant="heading-strong-s">{tPricing("min30")}</Text>
+                    <Text variant="body-default-m">{tPricing("price30")}</Text>
+                </Column>
+                <Column align="center">
+                    <Text variant="heading-strong-s">{tPricing("min45")}</Text>
+                    <Text variant="body-default-m">{tPricing("price45")}</Text>
+                </Column>
+                <Column align="center">
+                    <Text variant="heading-strong-s">{tPricing("min60")}</Text>
+                    <Text variant="body-default-m">{tPricing("price60")}</Text>
+                </Column>
+                <Column align="center">
+                    <Text variant="heading-strong-s">{tPricing("min90")}</Text>
+                    <Text variant="body-default-m">{tPricing("price90")}</Text>
+                </Column>
+            </Flex>
+        </Column>
+
         <div
           style={{
             display: "grid",
@@ -111,12 +170,6 @@ export default function Home() {
             />
           ))}
         </div>
-
-        <Link href="/services" passHref>
-          <Button variant="secondary" size="m" arrowIcon>
-            {t("viewAllButton")}
-          </Button>
-        </Link>
       </Column>
 
       {/* About Section */}

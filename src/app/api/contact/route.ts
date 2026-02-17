@@ -1,126 +1,72 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import dns from 'dns';
-import { promisify } from 'util';
-
-const resolveMx = promisify(dns.resolveMx);
 
 export async function POST(request: Request) {
   try {
-    const { name, email, phone, service, message } = await request.json();
+    const { name, phone, service, message } = await request.json();
 
-    // 1. Validation
-    if (!name || !email || !message) {
+    // 1. Validation - Name and Phone are required
+    if (!name || !phone || !message) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Missing required fields: Name, Phone, Message' },
         { status: 400 }
       );
     }
 
-    const mail2smsAddress = process.env.MAIL2SMS_ADDRESS;
-    if (!mail2smsAddress) {
+    // 2. Configuration & Transporter Setup
+    const smtpHost = process.env.SMTP_HOST;
+    const smtpPort = Number(process.env.SMTP_PORT) || 587;
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+    const smtpFromEmail = process.env.SMTP_FROM_EMAIL || smtpUser; // Default to user if not set
+    const smtpFromName = process.env.SMTP_FROM_NAME || "Suksan Massage Website";
+
+    if (!smtpHost || !smtpUser || !smtpPass) {
+      console.error("Missing SMTP Configuration");
+       return NextResponse.json(
+        { error: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      secure: smtpPort === 465, // true for 465, false for other ports
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    });
+
+    // 3. Determine SMS Target Address
+    let smsTarget = process.env.MAIL2SMS_ADDRESS;
+    if (!smsTarget) {
       throw new Error('MAIL2SMS_ADDRESS environment variable is not set');
     }
-
-    // 2. Configure Transporter
-    // Priority: 
-    // A. Use SMTP_HOST if defined (Standard SMTP)
-    // B. Fallback to Direct MX Delivery (Port 25 to recipient's MX)
     
-    let transporter;
-
-    if (process.env.SMTP_HOST) {
-      console.log('Using configured SMTP Server:', process.env.SMTP_HOST);
-      transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: Number(process.env.SMTP_PORT) || 587,
-        secure: false, 
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS,
-        },
-        tls: { 
-          ciphers: "SSLv3",
-          rejectUnauthorized: false
-        }
-      });
-    } else {
-      console.log('No SMTP_HOST defined. Attempting Direct MX Delivery...');
-      
-      // Determine the domain to look up MX records for
-      const domain = mail2smsAddress.split('@')[1];
-      if (!domain) {
-        throw new Error('Invalid MAIL2SMS_ADDRESS format');
-      }
-
-      // Resolve MX records manually for better logging/control (optional but good for debugging)
-      try {
-        const mxRecords = await resolveMx(domain);
-        if (!mxRecords || mxRecords.length === 0) {
-          throw new Error(`No MX records found for domain: ${domain}`);
-        }
-        // Sort by priority
-        mxRecords.sort((a, b) => a.priority - b.priority);
-        console.log(`Resolved MX records for ${domain}:`, mxRecords);
-        // Nodemailer 'direct: true' handles the connection logic, but knowing MX exists helps.
-      } catch (dnsError) {
-        console.warn(`DNS lookup warning for ${domain}:`, dnsError);
-        // Proceed anyway, let nodemailer try
-      }
-
-      transporter = nodemailer.createTransport({
-        name: 'suksan-massage.ch', // Hostname to use in HELO
-        direct: true, // Tell nodemailer to route directly to MX
-        logger: true, // Log to console for debugging
-        debug: true   // Log SMTP traffic
-      } as any);
-    }
-
-    // 3. Email Content (Optimized for SMS)
-    const subject = `Inquiry: ${service || 'General'}`;
-    
-    // Concise text body for SMS
-    const textContent = `New Request:
+    // 4. Construct SMS Content (Template)
+    const smsContent = `New Request
 Name: ${name}
-Svc: ${service || 'General'}
-Msg: ${message}
-Phone: ${phone || 'N/A'}
-Ref: ${email}`;
+Phone: ${phone}
+Service: ${service || 'General'}
+Msg: ${message}`;
 
-    const mailOptions = {
-      from: `website@suksan-massage.ch`, // Sender address (Must be valid SPF if direct sending)
-      to: mail2smsAddress,
-      replyTo: email,
-      subject: subject,
-      text: textContent,
+    const mailOptionsToOwner = {
+      from: `"${smtpFromName}" <${smtpFromEmail}>`,
+      to: smsTarget,
+      subject: `New Request from ${name}`,
+      text: smsContent,
     };
 
-    if (!transporter) {
-       throw new Error('Email transporter configuration failed');
-    }
-
-    // 4. Send Email
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Message sent: %s', info.messageId);
-
-    if (!process.env.SMTP_HOST && info.accepted.length === 0) {
-       // Start of fallback logic if direct send was attempted but no recipients accepted
-       console.warn('Direct send reported no accepted recipients. This might be due to Port 25 blocking.');
-    }
+    // 5. Send to Shop Owner (via SMS Gateway)
+    await transporter.sendMail(mailOptionsToOwner);
+    console.log('Notification sent to shop owner.');
 
     return NextResponse.json({ success: true }, { status: 200 });
 
   } catch (error) {
     console.error('Error in /api/contact:', error);
-    
-    // Check for specific Direct Send errors common in cloud environments
-    if (!process.env.SMTP_HOST && (error as any).code === 'ETIMEDOUT') {
-       return NextResponse.json(
-        { error: 'Direct MX delivery failed (Timeout). Your hosting provider likely blocks Port 25.' },
-        { status: 500 }
-      );
-    }
-    
     return NextResponse.json(
       { error: 'Failed to send message' },
       { status: 500 }

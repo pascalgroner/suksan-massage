@@ -8,7 +8,6 @@ interface ServiceCardProps {
   title: string;
   description: string;
   imageSrc: string;
-  price: string;
   duration: string;
   href: string;
 }
@@ -17,7 +16,6 @@ export const ServiceCard = ({
   title,
   description,
   imageSrc,
-  price,
   duration,
   href,
 }: ServiceCardProps) => {
@@ -30,6 +28,7 @@ export const ServiceCard = ({
       overflow="hidden"
       style={{
         transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+        height: "100%", // Ensure the card takes full height of the grid cell
       }}
     >
       <div style={{ position: "relative", width: "100%", aspectRatio: "16/9" }}>
@@ -41,9 +40,10 @@ export const ServiceCard = ({
         />
       </div>
       
-      <Column padding="l" gap="m" fillWidth>
+      <Column padding="l" gap="m" fillWidth style={{ flex: 1 }}> {/* flex: 1 ensures this column takes remaining space */}
         <Column gap="xs">
           <Heading variant="display-default-s">{title}</Heading>
+          
           <Flex gap="s">
             <Badge
               textVariant="label-default-s"
@@ -55,24 +55,14 @@ export const ServiceCard = ({
               <Icon name="time" size="s" onBackground="neutral-weak" />
               {duration}
             </Badge>
-            <Badge
-              textVariant="label-default-s"
-              background="brand-alpha-weak"
-              padding="xs"
-              gap="xs"
-              vertical="center"
-            >
-              <Icon name="price" size="s" onBackground="brand-medium" />
-              <Text onBackground="brand-medium">{price}</Text>
-            </Badge>
           </Flex>
         </Column>
         
-        <Text variant="body-default-m" onBackground="neutral-weak">
+        <Text variant="body-default-m" onBackground="neutral-weak" style={{ flex: 1 }}> {/* flex: 1 pushes button down */}
           {description}
         </Text>
 
-        <Link href={href} passHref style={{ width: "100%" }}>
+        <Link href={href} passHref style={{ width: "100%", marginTop: "auto" }}> {/* marginTop: auto acts as a spacer if flex is used */}
           <Button variant="secondary" fillWidth arrowIcon>
             Book Now
           </Button>

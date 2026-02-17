@@ -16,7 +16,7 @@
     "heroTitle": "Relax, Rejuvenate, Revitalize",
     "heroSubtitle": "Authentic Thai Massage in Bern City Center",
     "bookButton": "Book Appointment",
-    "featuredTitle": "Popular Treatments",
+    "featuredTitle": "Treatments",
     "featuredSubtitle": "Discover therapeutic Thai massage for stress relief and back pain.",
     "viewAllButton": "View All Services",
     "aboutTitle": "Traditional Thai Massage in Bern",
@@ -35,16 +35,20 @@
       "description": "A therapeutic massage that combines acupressure, Indian Ayurvedic principles, and assisted yoga postures. Perfect for relieving muscle tension and improving flexibility."
     },
     "oil": {
-      "title": "Oil Massage",
+      "title": "Oil and Relax Massage",
       "description": "A gentle and relaxing massage using aromatic oils to soothe the body and mind. Improves circulation and relieves stress."
     },
     "foot": {
-      "title": "Foot Reflexology",
+      "title": "Foot Reflexology Massage",
       "description": "Based on the principle that reflex points on the feet correspond to organs and glands in the body. Promotes overall health and well-being."
+    },
+    "back": {
+      "title": "Back & Neck Massage",
+      "description": "Relieve tension and stress in your back and neck with this targeted massage."
     }
   },
   "Contact": {
-    "title": "Contact Us",
+    "title": "Visit us",
     "subtitle": "Ready to relax? Send us a message or visit our spa in Bern.",
     "locationHours": "Location & Hours",
     "openingHours": "Opening Hours",
@@ -55,7 +59,7 @@
     "form": {
       "name": "Name",
       "email": "Email",
-      "phone": "Phone (Optional)",
+      "phone": "Phone",
       "service": "Service",
       "message": "Message",
       "submit": "Send Message",
@@ -77,5 +81,31 @@
     "a3": "Please check with your supplementary health insurance provider. While we are certified, coverage policies vary.",
     "q4": "What should I wear?",
     "a4": "For Thai Massage, we provide comfortable traditional clothing. For Oil Massage, standard draping procedures are used to ensure your privacy and comfort."
+  },
+  "Pricing": {
+    "title": "Standard Pricing",
+    "subtitle": "All our treatments (Thai, Oil, Foot) follow the same pricing structure",
+    "min30": "30 Min",
+    "price30": "60.00 CHF",
+    "min45": "45 Min",
+    "price45": "80.00 CHF",
+    "min60": "60 Min",
+    "price60": "90.00 CHF",
+    "min90": "90 Min",
+    "price90": "130.00 CHF"
+  },
+  "General": {
+    "phone": "+41 76 259 05 33",
+    "email": "",
+    "address": "Weingartstrasse 57 UG, 3014 Bern"
+  },
+  "OpeningHours": {
+    "mondayFriday": "10:00 - 20:00",
+    "saturday": "10:00 - 18:00",
+    "sunday": "Closed"
+  },
+  "Banner": {
+    "active": true,
+    "text": "We are now not in holiday. The shop is closed from 05.07.2026 to 31.07.2026"
   }
 }

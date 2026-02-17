@@ -24,6 +24,7 @@
   - [x] Implement Service Cards <!-- id: 27 -->
   - [x] Implement Contact Form <!-- id: 28 -->
   - [x] Implement Contact Form SMS Notification <!-- id: 34 -->
+  - [x] Generate Gmail Setup Guide <!-- id: 35 -->
 - [ ] Refinement & Content <!-- id: 29 -->
   - [x] Implement About Section (Home Page) <!-- id: 30 -->
   - [x] Review Mobile Responsiveness <!-- id: 31 -->
