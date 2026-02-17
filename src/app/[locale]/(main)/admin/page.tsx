@@ -87,6 +87,46 @@ export default function AdminPage() {
     });
   };
 
+  // Helper to delete a FAQ pair
+  const deleteFaq = (key: string) => {
+    setTranslations((prev: any) => {
+        const newState = JSON.parse(JSON.stringify(prev));
+        if (newState.de.Faq) {
+            delete newState.de.Faq[key];
+            delete newState.de.Faq[key.replace('q', 'a')];
+        }
+        if (newState.en.Faq) {
+            delete newState.en.Faq[key];
+            delete newState.en.Faq[key.replace('q', 'a')];
+        }
+        return newState;
+    });
+  };
+
+  // Helper to add a new FAQ pair
+  const addFaq = () => {
+    setTranslations((prev: any) => {
+        const newState = JSON.parse(JSON.stringify(prev));
+        const keys = Object.keys(newState.de.Faq || {}).filter(k => k.startsWith('q'));
+        const max = keys.reduce((acc, k) => {
+            const num = parseInt(k.replace("q", ""));
+            return num > acc ? num : acc;
+        }, 0);
+        const next = max + 1;
+        const qKey = `q${next}`;
+        const aKey = `a${next}`;
+        
+        if (!newState.de.Faq) newState.de.Faq = {};
+        if (!newState.en.Faq) newState.en.Faq = {};
+
+        newState.de.Faq[qKey] = "Neue Frage";
+        newState.de.Faq[aKey] = "Neue Antwort";
+        newState.en.Faq[qKey] = "New Question";
+        newState.en.Faq[aKey] = "New Answer";
+        return newState;
+    });
+  };
+
   // Helper to safely access nested properties
   const getVal = (lang: 'de' | 'en', path: string[]) => {
     let current = translations[lang];
@@ -179,16 +219,57 @@ export default function AdminPage() {
             </Column>
         </Flex>
 
-        {/* FAQ - Simplified for MVP */}
+        {/* FAQ - Dynamic Editor */}
         <Column fillWidth gap="m" background="surface" padding="l" radius="l" border="neutral-alpha-weak">
             <Heading variant="heading-strong-s">FAQ Editor</Heading>
-            <Text variant="body-default-s" onBackground="neutral-weak">Edit the FAQ questions and answers below.</Text>
+            <Text variant="body-default-s" onBackground="neutral-weak">Manage Frequently Asked Questions.</Text>
             
-            <Input id="faq-q1-de" label="Question 1 (DE)" value={getVal('de', ['Faq', 'q1'])} onChange={(e) => updateTranslation('de', ['Faq', 'q1'], e.target.value)} />
-            <Input id="faq-a1-de" label="Answer 1 (DE)" value={getVal('de', ['Faq', 'a1'])} onChange={(e) => updateTranslation('de', ['Faq', 'a1'], e.target.value)} />
-            
-            <Input id="faq-q1-en" label="Question 1 (EN)" value={getVal('en', ['Faq', 'q1'])} onChange={(e) => updateTranslation('en', ['Faq', 'q1'], e.target.value)} />
-            <Input id="faq-a1-en" label="Answer 1 (EN)" value={getVal('en', ['Faq', 'a1'])} onChange={(e) => updateTranslation('en', ['Faq', 'a1'], e.target.value)} />
+            {(Object.keys(translations.de.Faq || {})
+                .filter(k => k.startsWith('q'))
+                .sort((a, b) => parseInt(a.replace("q", "")) - parseInt(b.replace("q", "")))
+            ).map((key) => (
+                <Column key={key} gap="s" padding="m" border="neutral-alpha-weak" radius="m" background="neutral-alpha-weak">
+                    <Flex fillWidth horizontal="between" vertical="center" marginBottom="xs">
+                        <Text variant="label-default-s">ID: {key}</Text>
+                        <Button variant="tertiary" size="s" onClick={() => deleteFaq(key)}>Delete</Button>
+                    </Flex>
+                    
+                    <Flex gap="m" fillWidth direction="column">
+                        <Column fillWidth gap="xs">
+                            <Text variant="label-strong-s">German</Text>
+                            <Input 
+                                id={`faq-${key}-de`} 
+                                label="Question" 
+                                value={getVal('de', ['Faq', key])} 
+                                onChange={(e) => updateTranslation('de', ['Faq', key], e.target.value)} 
+                            />
+                            <Input 
+                                id={`faq-a-${key}-de`} 
+                                label="Answer" 
+                                value={getVal('de', ['Faq', key.replace('q', 'a')])} 
+                                onChange={(e) => updateTranslation('de', ['Faq', key.replace('q', 'a')], e.target.value)} 
+                            />
+                        </Column>
+                        <Column fillWidth gap="xs">
+                            <Text variant="label-strong-s">English</Text>
+                            <Input 
+                                id={`faq-${key}-en`} 
+                                label="Question" 
+                                value={getVal('en', ['Faq', key])} 
+                                onChange={(e) => updateTranslation('en', ['Faq', key], e.target.value)} 
+                            />
+                            <Input 
+                                id={`faq-a-${key}-en`} 
+                                label="Answer" 
+                                value={getVal('en', ['Faq', key.replace('q', 'a')])} 
+                                onChange={(e) => updateTranslation('en', ['Faq', key.replace('q', 'a')], e.target.value)} 
+                            />
+                        </Column>
+                    </Flex>
+                </Column>
+            ))}
+
+            <Button variant="secondary" onClick={addFaq} size="m">Add New Question</Button>
         </Column>
 
         <Flex gap="m">

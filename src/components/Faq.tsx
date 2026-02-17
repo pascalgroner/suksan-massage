@@ -1,11 +1,20 @@
 "use client";
 
 import { Heading, Text, Column, Flex, Icon } from "@once-ui-system/core";
-import { useTranslations } from "next-intl";
+import { useTranslations, useMessages } from "next-intl";
 
 export const Faq = () => {
   const t = useTranslations("Faq");
-  const questions = ["q1", "q2", "q3", "q4"];
+  const messages = useMessages();
+  
+  const faqMessages = (messages as any).Faq || {};
+  const questions = Object.keys(faqMessages)
+    .filter(key => key.startsWith('q'))
+    .sort((a, b) => {
+      const numA = parseInt(a.replace('q', ''), 10);
+      const numB = parseInt(b.replace('q', ''), 10);
+      return numA - numB;
+    });
 
   return (
     <Column
