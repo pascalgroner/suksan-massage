@@ -67,6 +67,14 @@ export default async function ContactPage() {
             </Column>
 
             <Column gap="xs" marginTop="m">
+              <Text variant="label-default-s" onBackground="neutral-weak">{t("directionsTitle")}</Text>
+              <Flex gap="s" vertical="center">
+                <Icon name="location" onBackground="brand-medium" />
+                <Text>{t("publicTransport")}</Text>
+              </Flex>
+            </Column>
+
+            <Column gap="xs" marginTop="m">
               <Text variant="label-default-s" onBackground="neutral-weak">{t("openingHours")}</Text>
               <Flex horizontal="between">
                 <Text>{t("mondayFriday")}</Text>

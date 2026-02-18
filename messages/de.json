@@ -15,7 +15,7 @@
   "Home": {
     "heroTitle": "Entspannen, Erholen, Regenerieren",
     "heroSubtitle": "Authentische Thaimassage im Zentrum von Bern",
-    "bookButton": "Termin buchen",
+    "bookButton": "Buche noch heute deine Massage oder Behandlung",
     "featuredTitle": "Behandlungen",
     "featuredSubtitle": "Entdecken Sie unsere gefragtesten Therapien gegen Stress und Rückenbeschwerden.",
     "viewAllButton": "Alle Angebote anzeigen",
@@ -24,7 +24,7 @@
     "aboutText2": "Inspiriert von der Leidenschaft, die therapeutischen Vorteile der Nuad Thai (Thai-Yoga-Massage) zu teilen, schuf Frau Vecchi einen Ort der Ruhe.",
     "aboutText3": "Wir sind stolz auf unsere Professionalität. Frau Vecchi besitzt ein Diplom der renommierten <bold>Wat Pho Thai Traditional Medical School</bold> in Bangkok.",
     "aboutText4": "Alle unsere Masseurinnen sind zertifiziert und bringen über <bold>10 Jahre Erfahrung</bold> mit. Geniessen Sie unsere entspannende Atmosphäre.",
-    "meetTeamButton": "Unser Team kennenlernen"
+    "meetTeamButton": "Standort & Kontakte"
   },
   "Services": {
     "title": "Unsere Angebote",
@@ -92,7 +92,9 @@
       "confirmationSubject": "Eingang Ihrer Anfrage - Suksan Massage",
       "confirmationBody": "Guten Tag {name},\n\nVielen Dank für Ihre Anfrage für eine {service}.\n\nWir haben Ihre Anfrage erhalten und werden uns in Kürze bei Ihnen melden, um den Termin zu bestätigen.\n\nFreundliche Grüsse,\nSuksan Massage",
       "sendAnother": "Neue Anfrage senden"
-    }
+    },
+    "directionsTitle": "Wegbeschreibung",
+    "publicTransport": "ÖV: Bus Nr. 20 (Breitfeld) 2 Minuten laufen, Tram Nr. 3,6,7,8,9 (Breitenrein) 4 Minuten laufen"
   },
   "Faq": {
     "title": "Häufig gestellte Fragen",
@@ -100,10 +102,18 @@
     "a1": "Thaimassage wird bekleidet auf einer Bodenmatte durchgeführt und beinhaltet Dehnungen und Druckpunkte. Ölmassage findet auf einer Liege mit Hautkontakt und aromatischen Ölen zur Entspannung statt.",
     "q2": "Hilft Thaimassage bei Rückenschmerzen?",
     "a2": "Ja, gezielte Dehnungen und Akupressur in der Thaimassage sind sehr effektiv zur Linderung von Rückenverspannungen und zur Verbesserung der Beweglichkeit.",
-    "q3": "Ist Nuad Thai krankenkassenanerkannt?",
-    "a3": "Bitte erkundigen Sie sich bei Ihrer Zusatzversicherung. Obwohl wir zertifiziert sind, variieren die Deckungsrichtlinien.",
+    "q3": "Ist Suksan Massage krankenkassenanerkannt?",
+    "a3": "Wir besitzen trotz unserer Qualifikationen aktuell noch keine Krankenkassen Abrechnungsbewilligung. Mit unseren fairen Konditionen kommen wir in die Nähe der Selbstbehaltskosten mit KK Abrechnung",
     "q4": "Was soll ich anziehen?",
-    "a4": "Für die Thaimassage stellen wir bequeme traditionelle Kleidung zur Verfügung. Bei der Ölmassage werden Standard-Abdeckverfahren angewendet, um Ihre Privatsphäre und Ihren Komfort zu gewährleisten."
+    "a4": "Für die Thaimassage stellen wir bequeme traditionelle Kleidung zur Verfügung. Bei der Ölmassage werden Standard-Abdeckverfahren angewendet, um Ihre Privatsphäre und Ihren Komfort zu gewährleisten.",
+    "q5": "Gibt es Duschmöglichkeiten?",
+    "a5": "Ja, wir verfügen über eine Dusche, die Sie gerne nutzen können.",
+    "q6": "Gibt es Parkplätze in der Nähe?",
+    "a6": "Tagsüber finden Sie einige Blaue-Zone-Parkplätze direkt an der Strasse. Abends gibt es Parkmöglichkeiten etwa 2 Gehminuten entfernt beim Denner.",
+    "q7": "Kann ich die Intensität der Massage wählen?",
+    "a7": "Ja, natürlich. Sie können entscheiden, ob Sie eine entspannende, aromatische, sanfte, mittlere oder starke Massage wünschen.",
+    "q8": "Verwenden Sie Hot Stone, Thai-Balsam oder Öl?",
+    "a8": "Ja, wir bieten verschiedene spezialisierte Behandlungen inkl. Hot Stone, medizinischem Thai-Balsam und Ölen an, um die beste gesundheitliche Wirkung zu erzielen."
   },
   "Pricing": {
     "title": "Preisliste",

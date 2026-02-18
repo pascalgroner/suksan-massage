@@ -15,21 +15,21 @@
   "Home": {
     "heroTitle": "Relax, Rejuvenate, Revitalize",
     "heroSubtitle": "Authentic Thai Massage in Bern City Center",
-    "bookButton": "Book Appointment",
+    "bookButton": "Book your massage and treadment today",
     "featuredTitle": "Treatments",
-    "featuredSubtitle": "Discover therapeutic Thai massage for stress relief and back pain.",
+    "featuredSubtitle": "Discover our most popular therapies for stress relief and back pain.",
     "viewAllButton": "View All Services",
     "aboutTitle": "Traditional Thai Massage in Bern",
     "aboutText1": "Founded in 2026 by Mrs. Kumjuan Vecchi, Suksan Massage brings authentic Thai healing arts to Bern, Switzerland.",
     "aboutText2": "Experience the benefits of traditional Nuad Thai massage in a serene environment designed for relaxation.",
     "aboutText3": "Professionalism is our priority. Mrs. Vecchi is certified by the famous <bold>Wat Pho Thai Traditional Medical School</bold> in Bangkok.",
     "aboutText4": "All our therapists are certified experts with over <bold>10 years of experience</bold>. Relax in our 'Rose & Forest' ambiance.",
-    "meetTeamButton": "Meet Our Team"
+    "meetTeamButton": "Location & Contacts"
   },
   "Services": {
     "title": "Our Services",
     "subtitle": "Experience the art of prepared relaxation with our authentic treatments.",
-    "bookButton": "Book Now",
+    "bookButton": "Booking Now",
     "thai": {
       "title": "Traditional Thai Massage",
       "description": "A therapeutic massage that combines acupressure, Indian Ayurvedic principles, and assisted yoga postures. Perfect for relieving muscle tension and improving flexibility."
@@ -92,7 +92,9 @@
       "confirmationSubject": "Request Received - Suksan Massage",
       "confirmationBody": "Hello {name},\n\nThank you for your request for {service}.\n\nWe have received your request and will contact you shortly to confirm the appointment.\n\nBest regards,\nSuksan Massage",
       "sendAnother": "Send Another Request"
-    }
+    },
+    "directionsTitle": "Directions",
+    "publicTransport": "Public Transport: Bus No. 20 (Breitfeld) 2 minutes walking, Tram No. 3,6,7,8,9 (Breitenrein) 4 minutes walking"
   },
   "Faq": {
     "title": "Frequently Asked Questions",
@@ -100,14 +102,22 @@
     "a1": "Thai Massage is performed fully clothed on a floor mat and involves stretching and pressure points. Oil Massage is performed on a table with skin contact using aromatic oils for relaxation.",
     "q2": "Does Thai Massage help with back pain?",
     "a2": "Yes, targeted stretching and acupressure in Thai Massage are highly effective for relieving back tension and improving mobility.",
-    "q3": "Is Nuad Thai covered by insurance?",
-    "a3": "Please check with your supplementary health insurance provider. While we are certified, coverage policies vary.",
+    "q3": "Is Suksan Massage covered by insurance?",
+    "a3": "We currently do not have a direct billing authorization from health insurance companies, despite our qualifications. However, with our fair pricing, we come close to the cost of a deductible with insurance billing.",
     "q4": "What should I wear?",
-    "a4": "For Thai Massage, we provide comfortable traditional clothing. For Oil Massage, standard draping procedures are used to ensure your privacy and comfort."
+    "a4": "For Thai Massage, we provide comfortable traditional clothing. For Oil Massage, standard draping procedures are used to ensure your privacy and comfort.",
+    "q5": "Do you have shower facilities?",
+    "a5": "Yes, we have shower facilities available for our clients.",
+    "q6": "Is there parking available nearby?",
+    "a6": "During the day, there are blue zone parking slots on the street. In the evening, you can find parking spaces about 2 minutes away near Denner.",
+    "q7": "Can I choose the massage intensity?",
+    "a7": "Yes, you can specify if you prefer a relax, aroma, light, medium, or strong massage treatment.",
+    "q8": "Do you offer Hot Stone, Thai Balm, or Oil?",
+    "a8": "Yes, we provide specialized treatments using Hot Stones, traditional Thai medical balm, or oils for the best health benefits."
   },
   "Pricing": {
     "title": "Standard Pricing",
-    "subtitle": "All our treatments (Thai, Oil, Foot) follow the same pricing structure",
+    "subtitle": "All our treatments (Thai, Oil, Foot, Neck & Back) follow the same pricing structure",
     "min30": "30 Min",
     "price30": "60.00 CHF",
     "min45": "45 Min",

@@ -90,6 +90,14 @@ export async function POST(request: Request) {
         exactTime: "Genaue Zeit"
     };
 
+    const timeRangeMapEN: Record<string, string> = {
+        morning: "Morning from 9:00",
+        lunch: "Around Lunch",
+        afternoon: "Afternoon from 13:30",
+        evening: "Evening from 18:00",
+        exactTime: "Specific Time"
+    };
+
     const fullServiceDescriptionDE = serviceMapDE[service] || service || 'Allgemein';
     const displayTimeRangeDE = timeRangeMapDE[timeRange] || timeRange;
 
@@ -174,15 +182,27 @@ Behandlung: ${fullServiceDescriptionDE}`;
         
         const useLocale = locale || 'de';
         let customerMsg = '';
-        let subject = "Confirmation";
+        let subject = "Request Appointment";
 
         if (useLocale === 'de') {
-            subject = "Ihre Anfrage bei Suksan Massage";
-            customerMsg = `Guten Tag ${name}, danke für Ihre Anfrage für ${fullServiceDescriptionDE}. Wir werden Ihren Termin in Kürze bestätigen. Suksan Massage`;
+            subject = "Anfrage Termin";
+            
+            let timeStrDE = specificTime;
+            if (!timeStrDE || timeStrDE === 'anytime') {
+                timeStrDE = timeRangeMapDE[timeRange] || timeRange;
+            }
+
+            customerMsg = `Guten Tag ${name}, danke für Ihre Anfrage für ${fullServiceDescriptionDE}. Wir werden Ihren Termin in Kürze bestätigen.\n\nBitte beachten Sie, dass Sie ca. 5 Minuten vor der gewünschten Zeit (${timeStrDE} ${date}) eintreffen sollten.\n\nSuksan Massage`;
         } else {
             const fullServiceDescriptionEN = serviceMapEN[service] || service || 'Service';
-            subject = "Your request at Suksan Massage";
-            customerMsg = `Dear ${name}, thank you for your request for ${fullServiceDescriptionEN}. We will confirm your appointment shortly. Suksan Massage`;
+            subject = "Request Appointment";
+
+            let timeStrEN = specificTime;
+            if (!timeStrEN || timeStrEN === 'anytime') {
+                timeStrEN = timeRangeMapEN[timeRange] || timeRange;
+            }
+
+            customerMsg = `Dear ${name}, thank you for your request for ${fullServiceDescriptionEN}. We will confirm your appointment shortly.\n\nPlease be aware to arrive about 5 minutes prior the requested time (${timeStrEN} ${date}).\n\nSuksan Massage`;
         }
         
         try {
