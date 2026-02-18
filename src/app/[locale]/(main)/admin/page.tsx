@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Column, Flex, Heading, Input, Text } from "@once-ui-system/core";
+import { Button, Column, Flex, Heading, Input, Text, Grid } from "@once-ui-system/core";
 import { useTranslations } from "next-intl";
+import { EnvVarItem } from "./EnvVarItem";
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -12,6 +13,7 @@ export default function AdminPage() {
 
   // State for raw translation data
   const [translations, setTranslations] = useState<any>({ de: {}, en: {} });
+  const [envVars, setEnvVars] = useState<Record<string, string> | null>(null);
 
   const fetchContent = async () => {
     try {
@@ -25,6 +27,22 @@ export default function AdminPage() {
     } catch {
       setError("Failed to connect to server.");
     }
+  };
+
+  const fetchEnv = async (pwd: string) => {
+      try {
+          const res = await fetch("/api/admin/env", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ password: pwd }) 
+          });
+          if (res.ok) {
+              const data = await res.json();
+              setEnvVars(data);
+          }
+      } catch (e) {
+          console.error("Failed to fetch env vars");
+      }
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -42,6 +60,7 @@ export default function AdminPage() {
       if (res.ok) {
         setIsAuthenticated(true);
         await fetchContent();
+        await fetchEnv(password);
       } else {
         setError("Invalid password");
       }
@@ -215,6 +234,18 @@ export default function AdminPage() {
       
       <Flex gap="xl" wrap style={{ maxWidth: "1000px", width: "100%" }} direction="column">
         
+        {/* Environment Variables */}
+        {envVars && (
+            <Column fillWidth gap="m" background="surface" padding="l" radius="l" border="neutral-alpha-weak">
+                <Heading variant="heading-strong-s">Environment Variables</Heading>
+                <Flex gap="m" wrap>
+                    {Object.entries(envVars).map(([key, value]) => {
+                        return <EnvVarItem key={key} name={key} value={value} />;
+                    })}
+                </Flex>
+            </Column>
+        )}
+
         {/* Global Configuration */}
         <Column fillWidth gap="m" background="surface" padding="l" radius="l" border="neutral-alpha-weak">
             <Heading variant="heading-strong-s">System Configuration</Heading>

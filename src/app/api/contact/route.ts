@@ -55,7 +55,7 @@ const checkAndIncrementLimit = async (limit: number, alertEmail: string, transpo
 
 export async function POST(request: Request) {
   try {
-    const { name, phone, service, message, date, timeRange, specificTime, duration } = await request.json();
+    const { name, phone, service, message, date, timeRange, specificTime, duration, locale } = await request.json();
 
     // 1. Validation - Name and Phone are required
     if (!name || !phone) {
@@ -65,8 +65,16 @@ export async function POST(request: Request) {
       );
     }
 
-    // Helper to map service codes to full descriptions
-    const serviceMap: Record<string, string> = {
+    // Helper maps
+    const serviceMapDE: Record<string, string> = {
+      thai: "Traditionelle Thai Massage",
+      oil: "Öl und Relax Massage",
+      foot: "Fussreflex Massage",
+      back: "Rücken- & Nackenmassage",
+      other: "Andere Anfrage"
+    };
+    
+    const serviceMapEN: Record<string, string> = {
       thai: "Traditional Thai Massage",
       oil: "Oil and Relax Massage",
       foot: "Foot Reflexology Massage",
@@ -74,7 +82,16 @@ export async function POST(request: Request) {
       other: "Other Inquiry"
     };
 
-    const fullServiceDescription = serviceMap[service] || service || 'General';
+    const timeRangeMapDE: Record<string, string> = {
+        morning: "Morgens ab 9:00",
+        lunch: "Über den Mittag",
+        afternoon: "Nachmittags ab 13:30",
+        evening: "Abends ab 18:00",
+        exactTime: "Genaue Zeit"
+    };
+
+    const fullServiceDescriptionDE = serviceMapDE[service] || service || 'Allgemein';
+    const displayTimeRangeDE = timeRangeMapDE[timeRange] || timeRange;
 
     // 0. Check Daily Limit
     const dailyLimit = Number(process.env.DAILY_LIMIT) || 20;
@@ -120,21 +137,22 @@ export async function POST(request: Request) {
       throw new Error('MAIL2SMS_ADDRESS environment variable is not set');
     }
     
-    // 4. Construct SMS Content (Template)
+    // 4. Construct SMS Content (Template) - ALWAYS GERMAN for Shop Owner
     let smsContent = `Name: ${name}
-Phone: ${phone}
-Service: ${fullServiceDescription}`;
+Telefon: ${phone}
+Behandlung: ${fullServiceDescriptionDE}`;
 
-    if (date) smsContent += `\nDate: ${date}`;
-    if (duration) smsContent += `\nDuration: ${duration} min`;
-    if (timeRange) smsContent += `\nTime of Day: ${timeRange}`;
-    if (specificTime) smsContent += `\nDesired Time: ${specificTime}`;
-    if (message) smsContent += `\nMsg: ${message}`;
+    if (date) smsContent += `\nDatum: ${date}`;
+    if (duration) smsContent += `\nDauer: ${duration} min`;
+    if (timeRange && timeRange !== 'exactTime') smsContent += `\nZeitbereich: ${displayTimeRangeDE}`;
+    if (specificTime && specificTime !== 'anytime') smsContent += `\nZeit: ${specificTime}`;
+    // If specificTime is 'anytime', it means "Im Zeitbereich" logic handled by TimeRange title usually
+    if (message) smsContent += `\nNachricht: ${message}`;
 
     const mailOptionsToOwner = {
       from: `"${smtpFromName}" <${smtpFromEmail}>`,
       to: smsTarget,
-      subject: `Appointment Request`,
+      subject: `Anfrage: ${fullServiceDescriptionDE}`, // Enhanced subject
       text: smsContent,
     };
     
@@ -154,13 +172,24 @@ Service: ${fullServiceDescription}`;
         
         const customerSmsEmail = `${targetPhone}@${gatewayDomain}`;
         
-        const customerMsg = `Dear ${name}, thank you for your request for ${fullServiceDescription}. We will confirm your appointment shortly. Suksan Massage`;
+        const useLocale = locale || 'de';
+        let customerMsg = '';
+        let subject = "Confirmation";
+
+        if (useLocale === 'de') {
+            subject = "Ihre Anfrage bei Suksan Massage";
+            customerMsg = `Guten Tag ${name}, danke für Ihre Anfrage für ${fullServiceDescriptionDE}. Wir werden Ihren Termin in Kürze bestätigen. Suksan Massage`;
+        } else {
+            const fullServiceDescriptionEN = serviceMapEN[service] || service || 'Service';
+            subject = "Your request at Suksan Massage";
+            customerMsg = `Dear ${name}, thank you for your request for ${fullServiceDescriptionEN}. We will confirm your appointment shortly. Suksan Massage`;
+        }
         
         try {
             await transporter.sendMail({
                 from: `"${smtpFromName}" <${smtpFromEmail}>`,
                 to: customerSmsEmail,
-                subject: "Confirmation",
+                subject: subject,
                 text: customerMsg
             });
              console.log('Confirmation sent to customer.');

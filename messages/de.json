@@ -65,10 +65,14 @@
       "submit": "Nachricht senden",
       "selectService": "Wählen Sie eine Behandlung...",
       "selectDate": "Datum",
-      "selectTimeRange": "Tageszeit",
-      "morning": "Morgens",
-      "afternoon": "Nachmittags",
-      "evening": "Abends",
+      "selectTimeRange": "Flexibler Zeitbereich",
+      "rangeDefault": "Wählen sie einen Bereich...",
+      "exactTime": "Genaue Zeit",
+      "morning": "Morgens ab 9:00",
+      "lunch": "Über den Mittag",
+      "afternoon": "Nachmittags ab 13:30",
+      "evening": "Abends ab 18:00",
+      "anytime": "Im Zeitbereich",
       "specificTime": "Gewünschte Zeit",
       "requestTitle": "Anfrage für Termin",
       "duration": "Dauer",
@@ -82,7 +86,12 @@
       "phone_required": "Telefonnummer ist erforderlich",
       "phone_invalid": "Ungültiges Format",
       "service_required": "Bitte wählen Sie eine Behandlung",
-      "phone_example": "z.B. 079 123 45 67 oder +41 79 123 45 67"
+      "phone_example": "z.B. 079 123 45 67 oder +41 79 123 45 67",
+      "successDetails": "Wir haben Ihre Anfrage erhalten. Hier sind die Details:",
+      "labelTime": "Zeit",
+      "confirmationSubject": "Eingang Ihrer Anfrage - Suksan Massage",
+      "confirmationBody": "Guten Tag {name},\n\nVielen Dank für Ihre Anfrage für eine {service}.\n\nWir haben Ihre Anfrage erhalten und werden uns in Kürze bei Ihnen melden, um den Termin zu bestätigen.\n\nFreundliche Grüsse,\nSuksan Massage",
+      "sendAnother": "Neue Anfrage senden"
     }
   },
   "Faq": {

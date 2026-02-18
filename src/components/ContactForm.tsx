@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect, useMemo } from "react";
 import { Column, Button, Flex, Text, Input, Heading } from "@once-ui-system/core";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 
 interface ContactFormProps {
@@ -22,13 +22,14 @@ export const ContactForm = ({ config }: ContactFormProps) => {
   const searchParams = useSearchParams();
   const initialService = searchParams.get("service") || "";
   const t = useTranslations("Contact.form");
+  const locale = useLocale();
   
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     service: initialService,
     date: new Date().toISOString().split("T")[0],
-    timeRange: "morning",
+    timeRange: "",
     specificTime: "",
     duration: "60",
     message: "",
@@ -37,28 +38,26 @@ export const ContactForm = ({ config }: ContactFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  // Calculate default next slot
-  useEffect(() => {
+  // Helper to format time
+  const formatTime = (date: Date) => {
+    const h = date.getHours().toString().padStart(2, '0');
+    const m = date.getMinutes().toString().padStart(2, '0');
+    return `${h}:${m}`;
+  };
+
+  const calculateNextSlot = () => {
     const now = new Date();
     const currentHour = now.getHours();
-    const currentMinutes = now.getMinutes();
-
+    
     const openingTimeParts = config.openingHours.start.split(':');
     const closingTimeParts = config.openingHours.end.split(':');
     
     const openingHour = parseInt(openingTimeParts[0], 10);
     const closingHour = parseInt(closingTimeParts[0], 10);
-    const defaultDuration = config.serviceDuration.default; // Default duration in minutes
+    const defaultDuration = config.serviceDuration.default;
 
     let targetDate = now;
     let targetTimeStr = "";
-
-    // Helper to format time
-    const formatTime = (date: Date) => {
-        const h = date.getHours().toString().padStart(2, '0');
-        const m = date.getMinutes().toString().padStart(2, '0');
-        return `${h}:${m}`;
-    };
 
     // First check: Are we already past closing time?
     if (currentHour >= closingHour) {
@@ -67,13 +66,12 @@ export const ContactForm = ({ config }: ContactFormProps) => {
         targetTimeStr = config.openingHours.start;
     } else {
         // Calculate earliest possible slot today based on buffer
-        // 15 min buffer + round to next 15 min
         const bufferTime = new Date(now.getTime() + 15 * 60000);
         const m = bufferTime.getMinutes();
         const remain = 15 - (m % 15);
         const nextSlot = new Date(bufferTime.getTime() + (remain === 15 ? 0 : remain) * 60000);
         
-        // Check if this slot start is before opening time (if now is very early)
+        // Check if this slot start is before opening time
         if (nextSlot.getHours() < openingHour) {
              nextSlot.setHours(openingHour, 0, 0, 0);
         }
@@ -81,9 +79,6 @@ export const ContactForm = ({ config }: ContactFormProps) => {
         // Calculate end time of this potential slot
         const potentialEndTime = new Date(nextSlot.getTime() + defaultDuration * 60000);
         
-        // Check if the service would end after closing time
-        // We compare the end time hour/minute with closing hour
-        // If potentialEndTime > closingHour:00
         const closingDate = new Date(nextSlot);
         closingDate.setHours(closingHour, 0, 0, 0);
 
@@ -96,13 +91,18 @@ export const ContactForm = ({ config }: ContactFormProps) => {
              targetTimeStr = formatTime(nextSlot);
         }
     }
-    
+    return { date: targetDate.toISOString().split("T")[0], time: targetTimeStr };
+  };
+
+  // Calculate default next slot on mount
+  useEffect(() => {
+    const { date, time } = calculateNextSlot();
     setFormData(prev => ({ 
         ...prev, 
-        date: targetDate.toISOString().split("T")[0],
-        specificTime: targetTimeStr 
+        date: date,
+        specificTime: time 
     }));
-  }, []);
+  }, []); // Only runs on mount
 
   const timeSlots = useMemo(() => {
     const slots = [];
@@ -117,7 +117,20 @@ export const ContactForm = ({ config }: ContactFormProps) => {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    
+    if (name === 'timeRange') {
+        if (value === 'exactTime') {
+            const { time } = calculateNextSlot(); // Reset to calculated next slot
+            setFormData(prev => ({ ...prev, [name]: value, specificTime: time }));
+        } else if (value !== '') {
+            setFormData(prev => ({ ...prev, [name]: value, specificTime: 'anytime' }));
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }));
+        }
+    } else {
+        setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -154,7 +167,7 @@ export const ContactForm = ({ config }: ContactFormProps) => {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, smsBody, phone: cleanPhone }),
+        body: JSON.stringify({ ...formData, smsBody, phone: cleanPhone, locale }),
       });
 
       if (!response.ok) throw new Error('Failed to send message');
@@ -162,17 +175,9 @@ export const ContactForm = ({ config }: ContactFormProps) => {
       setSubmitStatus('success');
       // No alert here, state change triggers UI update
       
-      setFormData({
-        name: "",
-        phone: "",
-        service: "",
-        date: new Date().toISOString().split("T")[0],
-        timeRange: "morning",
-        specificTime: "",
-        duration: "60",
-        message: "",
-      });
-      setErrors({});
+      // Form data is NOT cleared here so success view can show it.
+      // It is cleared when "Send Another Request" is clicked.
+       setErrors({});
     } catch (error) {
       console.error("Error submitting form:", error);
       setSubmitStatus('error');
@@ -205,14 +210,31 @@ export const ContactForm = ({ config }: ContactFormProps) => {
             </Flex>
             <Heading variant="heading-strong-l" align="center">{t("success")}</Heading>
             <Text variant="body-default-m" align="center" onBackground="neutral-medium">
-                We have received your request. Here are the details:
+                {t("successDetails")}
             </Text>
             
             <Column fillWidth gap="xs" padding="m" background="surface" radius="m" border="neutral-alpha-weak" marginTop="m">
-                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">Service:</Text> <Text variant="body-strong-s">{formData.service}</Text></Flex>
-                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">Date:</Text> <Text variant="body-strong-s">{formData.date}</Text></Flex>
-                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">Time:</Text> <Text variant="body-strong-s">{formData.specificTime}</Text></Flex>
-                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">Duration:</Text> <Text variant="body-strong-s">{formData.duration} min</Text></Flex>
+                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">{t("name")}:</Text> <Text variant="body-strong-s">{formData.name}</Text></Flex>
+                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">{t("phone")}:</Text> <Text variant="body-strong-s">{formData.phone}</Text></Flex>
+                <Flex gap="s">
+                    <Text variant="label-default-s" onBackground="neutral-weak">{t("service")}:</Text> 
+                    <Text variant="body-strong-s">
+                        {['thai', 'oil', 'foot', 'back', 'other'].includes(formData.service) ? t(formData.service) : formData.service}
+                    </Text>
+                </Flex>
+                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">{t("selectDate")}:</Text> <Text variant="body-strong-s">{formData.date}</Text></Flex>
+                <Flex gap="s">
+                    <Text variant="label-default-s" onBackground="neutral-weak">{t("labelTime")}:</Text> 
+                    <Text variant="body-strong-s">
+                        {formData.specificTime === 'anytime' && ['morning', 'lunch', 'afternoon', 'evening', 'exactTime'].includes(formData.timeRange) 
+                            ? t(formData.timeRange) 
+                            : formData.specificTime}
+                    </Text>
+                </Flex>
+                <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">{t("duration")}:</Text> <Text variant="body-strong-s">{formData.duration} min</Text></Flex>
+                {formData.message && (
+                    <Flex gap="s"><Text variant="label-default-s" onBackground="neutral-weak">{t("message")}:</Text> <Text variant="body-strong-s">{formData.message}</Text></Flex>
+                )}
             </Column>
 
             <Button 
@@ -232,7 +254,7 @@ export const ContactForm = ({ config }: ContactFormProps) => {
                     });
                 }}
             >
-                Send Another Request
+                {t("sendAnother")}
             </Button>
         </Column>
     );
@@ -312,7 +334,7 @@ export const ContactForm = ({ config }: ContactFormProps) => {
                 <option value="15">15 min</option>
                 <option value="30">30 min</option>
                 <option value="45">45 min</option>
-                <option value="60">60 min (Standard)</option>
+                <option selected value="60">60 min</option>
                 <option value="90">90 min</option>
                 <option value="120">120 min</option>
             </select>
@@ -330,7 +352,10 @@ export const ContactForm = ({ config }: ContactFormProps) => {
                 disabled={isSubmitting} 
                 className="form-control"
             >
+                <option value="">{t("rangeDefault")}</option>
+                <option value="exactTime">{t("exactTime")}</option>
                 <option value="morning">{t("morning")}</option>
+                <option value="lunch">{t("lunch")}</option>
                 <option value="afternoon">{t("afternoon")}</option>
                 <option value="evening">{t("evening")}</option>
             </select>
@@ -345,6 +370,7 @@ export const ContactForm = ({ config }: ContactFormProps) => {
                 disabled={isSubmitting} 
                 className="form-control"
             >
+                <option value="anytime">{t("anytime")}</option>
                 {timeSlots.map(slot => (
                     <option key={slot} value={slot}>{slot}</option>
                 ))}

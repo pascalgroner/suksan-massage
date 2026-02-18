@@ -6,7 +6,6 @@ const dns = require('dns');
 
 // Configuration
 const DOMAIN = "suksan-massage.com"; // Default domain, can be updated or read from args
-const ENV_FILE = '.env';
 
 // Colors for console output
 const colors = {
@@ -87,66 +86,82 @@ async function deploy() {
     // 3. Environment Variable Sync
     log("\n🔐 Checking Environment Variables...", colors.cyan);
     
-    // Read local .env
-    const localEnvContent = fs.readFileSync(path.resolve(process.cwd(), ENV_FILE), 'utf8');
-    const localEnvs = {};
-    localEnvContent.split('\n').forEach(line => {
-        // Strip comments first
-        const lineWithoutComments = line.split('#')[0].trim();
-        const match = lineWithoutComments.match(/^([^=]+)=(.*)$/);
-        if (match) {
-            const key = match[1].trim();
-            const val = match[2].trim().replace(/^['"]|['"]$/g, ''); // Simple cleanup
-            localEnvs[key] = val;
-        }
-    });
-
-    // Get Remote Envs
-    log("   Fetching remote variables from Netlify...", colors.reset);
-    // netlify env:list --json might fail if not linked. Check link status first.
-    if (!fs.existsSync('.netlify/state.json')) {
-        log("   Project not linked. running 'netlify link'...", colors.yellow);
-        try {
-            execSync('netlify link', { stdio: 'inherit' });
-        } catch (e) {
-            error("Failed to link project.");
-            process.exit(1);
-        }
-    }
-
-    let remoteEnvs = {};
-    try {
-        const remoteOutput = run('netlify env:list --json');
-        if (remoteOutput) {
-            remoteEnvs = JSON.parse(remoteOutput);
-        }
-    } catch (e) {
-        log("   Could not fetch remote envs (JSON format might not be supported by installed CLI version). Skipping automatch.", colors.yellow);
-    }
-
-    // Compare and Prompt
-    const missingKeys = Object.keys(localEnvs).filter(key => !remoteEnvs[key]);
-    
-    if (missingKeys.length > 0) {
-        log(`\n⚠️  The following variables are defined locally but missing in Netlify:`, colors.yellow);
-        missingKeys.forEach(k => log(`   - ${k}`, colors.yellow));
-        
-        const shouldSync = await ask("\nDo you want to upload these to Netlify now? (y/n)");
-        if (shouldSync.toLowerCase() === 'y') {
-            for (const key of missingKeys) {
-                const val = localEnvs[key];
-                log(`   Setting ${key}...`, colors.reset);
-                try {
-                    // netlify env:set KEY "VAL"
-                    execSync(`netlify env:set ${key} "${val}"`, { stdio: 'inherit' });
-                } catch (e) {
-                    error(`Failed to set ${key}`);
-                }
-            }
-            log("✅ Environment variables updated.", colors.green);
-        }
+    let envFilePath = path.resolve(process.cwd(), '.env.production');
+    if (!fs.existsSync(envFilePath)) {
+        log("   No .env.production found. Falling back to .env", colors.yellow);
+        envFilePath = path.resolve(process.cwd(), '.env');
     } else {
-        log("✅ All local environment variables are present in Netlify.", colors.green);
+        log("   Using .env.production for deployment.", colors.green);
+    }
+
+    if (!fs.existsSync(envFilePath)) {
+        error("   No environment file found (.env or .env.production). Skipping sync.");
+    } else {
+        // Read local env
+        const localEnvContent = fs.readFileSync(envFilePath, 'utf8');
+        const localEnvs = {};
+        localEnvContent.split('\n').forEach(line => {
+            // Strip comments first
+            const lineWithoutComments = line.split('#')[0].trim();
+            const match = lineWithoutComments.match(/^([^=]+)=(.*)$/);
+            if (match) {
+                const key = match[1].trim();
+                const val = match[2].trim().replace(/^['"]|['"]$/g, ''); // Simple cleanup
+                localEnvs[key] = val;
+            }
+        });
+
+        // Get Remote Envs
+        log("   Fetching remote variables from Netlify...", colors.reset);
+        // netlify env:list --json might fail if not linked. Check link status first.
+        if (!fs.existsSync('.netlify/state.json')) {
+            log("   Project not linked. running 'netlify link'...", colors.yellow);
+            try {
+                execSync('netlify link', { stdio: 'inherit' });
+            } catch (e) {
+                error("Failed to link project.");
+                process.exit(1);
+            }
+        }
+
+        let remoteEnvs = {};
+        try {
+            const remoteOutput = run('netlify env:list --json');
+            if (remoteOutput) {
+                remoteEnvs = JSON.parse(remoteOutput);
+            }
+        } catch (e) {
+            log("   Could not fetch remote envs (JSON format might not be supported by installed CLI version). Skipping automatch.", colors.yellow);
+        }
+
+        // Compare and Prompt
+        // We only care about keys present in our local file
+        const missingKeys = Object.keys(localEnvs).filter(key => {
+            // Check if key is missing remotely OR if value is different (optional, but good for sync)
+            return !remoteEnvs[key] || remoteEnvs[key] !== localEnvs[key];
+        });
+        
+        if (missingKeys.length > 0) {
+            log(`\n⚠️  The following variables are different or missing in Netlify vs local file:`, colors.yellow);
+            missingKeys.forEach(k => log(`   - ${k}`, colors.yellow));
+            
+            const shouldSync = await ask("\nDo you want to upload these to Netlify now? (y/n)");
+            if (shouldSync.toLowerCase() === 'y') {
+                for (const key of missingKeys) {
+                    const val = localEnvs[key];
+                    log(`   Setting ${key}...`, colors.reset);
+                    try {
+                        // netlify env:set KEY "VAL"
+                        execSync(`netlify env:set ${key} "${val}"`, { stdio: 'inherit' });
+                    } catch (e) {
+                        error(`Failed to set ${key}`);
+                    }
+                }
+                log("✅ Environment variables updated.", colors.green);
+            }
+        } else {
+            log("✅ All local environment variables match Netlify configuration.", colors.green);
+        }
     }
 
     // 4. Deploy

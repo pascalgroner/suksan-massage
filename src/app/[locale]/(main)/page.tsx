@@ -97,12 +97,13 @@ export default function Home() {
           gap="l"
           style={{ maxWidth: "800px", textAlign: "center" }}
         >
-          <Heading variant="display-strong-xl">
+          <Heading variant="display-strong-xl" style={{ color: "var(--function-neutral-900)" }}>
             {t("heroTitle")}
           </Heading>
           <Text
             variant="heading-default-xl"
             wrap="balance"
+            style={{ color: "var(--function-neutral-900)" }}
           >
             {t("heroSubtitle")}
           </Text>
