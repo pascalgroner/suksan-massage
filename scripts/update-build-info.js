@@ -28,6 +28,14 @@ if (fs.existsSync(VERSION_FILE_PATH)) {
 
 // Increment build number
 currentBuildInfo.buildNumber += 1;
+
+// Increment patch version (x.y.Z)
+const versionParts = currentBuildInfo.version.split('.');
+if (versionParts.length === 3) {
+    const patch = parseInt(versionParts[2], 10) + 1;
+    currentBuildInfo.version = `${versionParts[0]}.${versionParts[1]}.${patch}`;
+}
+
 currentBuildInfo.buildDate = `${formattedDate} ${formattedTime}`;
 currentBuildInfo.timestamp = timestamp;
 

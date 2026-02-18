@@ -68,7 +68,7 @@ export const Footer = () => {
             {t("copyright", { year: currentYear })}
         </Text>
         <Text variant="body-default-xs" onBackground="neutral-weak" style={{ opacity: 0.6 }}>
-            v{buildInfo.version} ({buildInfo.buildNumber}) - {buildInfo.buildDate}
+            v{buildInfo.version} - {buildInfo.buildDate}
         </Text>
       </Column>
     </Column>
