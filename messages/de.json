@@ -156,5 +156,23 @@
   "Banner": {
     "active": false,
     "text": "Wir sind noch nicht im Urlaub. Der Shop ist geschlossen von 05.07.2026 bis 31.07.2026"
+  },
+  "Imprint": {
+    "title": "Impressum",
+    "subtitle": "Verantwortlich für den Inhalt",
+    "company": "Unternehmen",
+    "representative": "Inhaberin",
+    "representativeName": "Kumjuan Vecchi",
+    "address": "Adresse",
+    "addressLine1": "Weingartstrasse 57 UG",
+    "addressLine2": "3014 Bern",
+    "contact": "Kontakt",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "legal": "Rechtliche Hinweise",
+    "copyright": "Urheberrecht",
+    "copyrightText": "Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem schweizerischen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung ausserhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.",
+    "disclaimer": "Haftungsausschluss",
+    "disclaimerText": "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschliesslich deren Betreiber verantwortlich."
   }
 }

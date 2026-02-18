@@ -156,5 +156,23 @@
   "Banner": {
     "active": false,
     "text": "We are now not in holiday. The shop is closed from 05.07.2026 to 31.07.2026"
+  },
+  "Imprint": {
+    "title": "Imprint",
+    "subtitle": "Responsible for Content",
+    "company": "Company",
+    "representative": "Owner",
+    "representativeName": "Kumjuan Vecchi",
+    "address": "Address",
+    "addressLine1": "Weingartstrasse 57 UG",
+    "addressLine2": "3014 Bern",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "Email",
+    "legal": "Legal Information",
+    "copyright": "Copyright",
+    "copyrightText": "The content and works created by the site operators on these pages are subject to Swiss copyright law. Duplication, processing, distribution, or any form of commercialization of such material beyond the scope of the copyright law shall require the prior written consent of its respective author or creator.",
+    "disclaimer": "Disclaimer",
+    "disclaimerText": "Despite careful content control, we assume no liability for the content of external links. The operators of the linked pages are solely responsible for their content."
   }
 }
