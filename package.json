@@ -29,7 +29,8 @@
     "sass": "^1.77.6",
     "schema-dts": "^1.1.5",
     "sharp": "^0.33.4",
-    "tailwind-merge": "^3.4.1"
+    "tailwind-merge": "^3.4.1",
+    "vercel": "^50.18.2"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -45,6 +46,10 @@
   },
   "overrides": {
     "@types/react": "19.0.1",
-    "@types/react-dom": "19.0.2"
+    "@types/react-dom": "19.0.2",
+    "path-to-regexp": "^6.3.0",
+    "tar": "^7.5.9",
+    "undici": "^6.23.0",
+    "ajv": "^8.18.0"
   }
 }

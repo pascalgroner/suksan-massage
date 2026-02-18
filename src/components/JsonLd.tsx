@@ -19,19 +19,19 @@ export default async function JsonLd() {
     "@type": "MassageShop" as any,
     "name": "Suksan Massage",
     "image": "https://suksan-massage.com/images/og/home.jpg",
-    "telephone": "+41 31 123 45 67",
+    "telephone": "+41 76 259 05 33",
     "email": "info@suksan-massage.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Musterstrasse 12",
+      "streetAddress": "Weingartstrasse 57",
       "addressLocality": "Bern",
-      "postalCode": "3000",
+      "postalCode": "3014",
       "addressCountry": "CH"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 46.947974,
-      "longitude": 7.444975
+      "latitude": 46.958, 
+      "longitude": 7.458
     },
     "openingHoursSpecification": [
       {

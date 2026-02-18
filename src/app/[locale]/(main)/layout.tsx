@@ -13,14 +13,16 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getTranslations } from 'next-intl/server';
 import JsonLd from '@/components/JsonLd';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  return Meta.generate({
-    title: meta.home.title,
-    description: meta.home.description,
+  const t = await getTranslations({ locale, namespace: "Meta.home" });
+
+  const metaData = Meta.generate({
+    title: t("title"),
+    description: t("description"),
     baseURL: baseURL,
     path: meta.home.path,
     canonical: meta.home.canonical,
@@ -31,6 +33,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       { href: 'https://suksan-massage.com/en', hrefLang: 'en' },
     ],
   });
+
+  return {
+    ...metaData,
+    keywords: t("keywords")
+  };
 }
 
 export default async function RootLayout({

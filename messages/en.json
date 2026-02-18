@@ -12,6 +12,21 @@
     "imprint": "Imprint",
     "copyright": "© {year} Suksan Massage. All rights reserved."
   },
+  "Meta": {
+    "home": {
+      "title": "Suksan Massage Bern - Authentic Thai Massage & Wellness",
+      "description": "Authentic Thai Massage in Bern Breitenrain. Wat Pho certified. Specializing in back pain relief, stress reduction, and oil massage. Book online now!",
+      "keywords": "Thai Massage Bern, Massage Breitenrain, Back pain relief Bern, Wat Pho, Wellness Bern, Oil massage, Reflexology, Neck massage, Relaxation"
+    },
+    "services": {
+      "title": "Our Services - Thai, Oil & Reflexology | Suksan Massage",
+      "description": "Discover our treatments: Traditional Thai Massage, Oil Relax Massage, Foot Reflexology, and Back Massage in Bern. Professional & certified."
+    },
+    "contact": {
+      "title": "Contact & Booking | Suksan Massage Bern",
+      "description": "Book your appointment online. Centrally located in Breitenrain, Bern. Opening hours: Mon-Sat 9am-10pm. Phone: +41 76 259 05 33."
+    }
+  },
   "Home": {
     "heroTitle": "Relax, Rejuvenate, Revitalize",
     "heroSubtitle": "Authentic Thai Massage in Bern City Center",

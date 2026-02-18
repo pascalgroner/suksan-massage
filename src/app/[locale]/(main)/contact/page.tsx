@@ -10,10 +10,10 @@ import path from "path";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Contact" });
+  const t = await getTranslations({ locale, namespace: "Meta.contact" });
   return {
-    title: `${t("title")} - Suksan Massage`,
-    description: t("subtitle"),
+    title: t("title"),
+    description: t("description"),
   };
 }
 
