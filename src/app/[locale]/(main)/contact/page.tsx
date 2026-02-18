@@ -1,5 +1,6 @@
 import { Heading, Text, Column, Flex, Button, Icon } from "@once-ui-system/core";
 import { ContactForm } from "@/components/ContactForm";
+import MapWrapper from "@/components/MapWrapper";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
@@ -91,24 +92,17 @@ export default async function ContactPage() {
             </Column>
           </Column>
 
-          {/* Map Placeholder */}
+          {/* Map */}
           <div
             style={{
               width: "100%",
-              height: "300px",
+              height: "500px",
               borderRadius: "var(--radius-l)",
               overflow: "hidden",
+              border: "1px solid var(--neutral-alpha-weak)",
             }}
           >
-            <iframe
-              src="https://maps.google.com/maps?q=Weingartstrasse+57,3014+Bern&t=&z=15&ie=UTF8&iwloc=&output=embed"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+            <MapWrapper />
           </div>
         </Column>
 
