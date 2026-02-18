@@ -3,14 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 
 // Declare custom elements to avoid TypeScript errors
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'gmpx-api-loader': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & { key?: string; "solution-channel"?: string }, HTMLElement>;
-      'gmpx-store-locator': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & { "map-id"?: string }, HTMLElement>;
-    }
-  }
-}
+// Declare custom elements to avoid TypeScript errors
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React from 'react';
 
 const CONFIGURATION = {
   "locations": [
@@ -80,7 +75,9 @@ export default function GoogleMapsLocator() {
           --gmpx-rating-color-empty: #e0e0e0;
         }
       `}</style>
+      {/* @ts-ignore */}
       <gmpx-api-loader key={apiKey} solution-channel="GMP_QB_locatorplus_v11_cABD"></gmpx-api-loader>
+      {/* @ts-ignore */}
       <gmpx-store-locator ref={locatorRef} map-id="DEMO_MAP_ID"></gmpx-store-locator>
     </div>
   );

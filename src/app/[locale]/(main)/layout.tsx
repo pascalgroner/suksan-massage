@@ -12,6 +12,7 @@ import { Providers } from '@/components/Providers';
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
@@ -102,6 +103,9 @@ export default async function RootLayout({
           </Column>
         </Providers>
       </NextIntlClientProvider>
+      {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+      )}
     </Flex>
   );
 }

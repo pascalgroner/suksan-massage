@@ -9,5 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
     },
     sitemap: `${baseURL}/sitemap.xml`,
+    host: `${baseURL}/llms.txt`,
   };
 }

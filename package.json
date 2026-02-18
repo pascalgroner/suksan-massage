@@ -14,6 +14,7 @@
     "biome-write": "npx @biomejs/biome format --write ."
   },
   "dependencies": {
+    "@next/third-parties": "^16.1.6",
     "@once-ui-system/core": "latest",
     "@radix-ui/react-slot": "^1.2.4",
     "@types/leaflet": "^1.9.21",

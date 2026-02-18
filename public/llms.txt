@@ -1,0 +1,36 @@
+# Suksan Massage - AI Agent Guidance
+
+## About
+Suksan Massage offers authentic traditional Thai, Oil, Back & Neck, and Foot Reflexology massages in the heart of Bern (Breitenrain). Founded by Wat Pho certified therapist Mrs. Kumjuan Vecchi.
+
+## Services & Pricing
+- **Traditional Thai Massage (Nuad Thai)**: Therapeutic, combines acupressure & yoga.
+  - 30 min: 60 CHF | 45 min: 80 CHF | 60 min: 90 CHF | 90 min: 130 CHF
+- **Oil & Relax Massage**: Gentle, aromatic oils, stress relief.
+  - 30 min: 60 CHF | 45 min: 80 CHF | 60 min: 90 CHF | 90 min: 130 CHF
+- **Back & Neck Massage**: Targeted tension relief.
+  - 30 min: 60 CHF | 45 min: 80 CHF | 60 min: 90 CHF | 90 min: 130 CHF
+- **Foot Reflexology**: Promotes overall well-being.
+  - 30 min: 60 CHF | 45 min: 80 CHF | 60 min: 90 CHF | 90 min: 130 CHF
+
+## Key Information
+- **Address**: Weingartstrasse 57 UG, 3014 Bern, Switzerland
+- **Transport**: Bus 20 (Breitfeld) or Tram 9 (Breitenrein)
+- **Phone**: +41 76 259 05 33
+- **Booking**: https://suksan-massage.com/contact (Online Booking Form available)
+- **Payment**: Cash or TWINT (on site)
+
+## Opening Hours
+- **Mon - Fri**: 09:00 - 22:00
+- **Sat**: 09:00 - 22:00
+- **Sun**: Closed
+
+## FAQ Highlights
+- **Insurance**: Not directly covered, but prices are competitively low comparable to deductibles.
+- **Clothing**: Traditional clothing provided for Thai massage; draping used for Oil massage.
+- **Facilities**: Shower available.
+
+## Site Structure
+- **Home**: https://suksan-massage.com/
+- **Services**: https://suksan-massage.com/services
+- **Contact/Booking**: https://suksan-massage.com/contact
