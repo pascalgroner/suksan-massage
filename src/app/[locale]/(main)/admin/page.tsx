@@ -298,6 +298,9 @@ export default function AdminPage() {
                 <Link href="/admin/review-card" passHref>
                     <Button variant="secondary" arrowIcon>Generate Review QR Card (A6)</Button>
                 </Link>
+                <Link href="/admin/poster-a1" passHref>
+                    <Button variant="secondary" arrowIcon>Werbeplakat A1 drucken</Button>
+                </Link>
             </Flex>
         </Column>
 

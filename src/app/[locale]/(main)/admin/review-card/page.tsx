@@ -10,7 +10,7 @@ export default function ReviewCardPage() {
     window.print();
   };
 
-  const reviewUrl = "https://search.google.com/local/writereview?placeid=ChIJH8DCIO45jkcRpNPamNi-zJk";
+  const reviewUrl = "https://www.google.com/search?q=thai+massage+bern&sca_esv=784db34c22f0db79&hl=en&authuser=0&udm=1&sxsrf=ANbL-n5T_eCROdJMNv-VJeLOftcjA1QmYQ:1771456285780&ei=HUeWabOwL_a7hbIPrrOO-AM&start=20&sa=N&sstk=Af77f_exwalfdMGjTfxlLMm5Bj6pvbJDGSEADElHuvJ3otsvy-bGvhj1HJaqNlInC_YnQXk9rPXiB7pvBikwUUjvG7FsUmDqcbDmVw&ved=2ahUKEwjzspj1lOSSAxX2XUEAHa6ZAz8Q8NMDegQIDxAM&biw=1424&bih=841&dpr=2&lqi=ChF0aGFpIG1hc3NhZ2UgYmVybpIBFnRoYWlfbWFzc2FnZV90aGVyYXBpc3Q#lkt=LocalPoiReviews&rlimm=14808893428615198410&lrd=0x478e39e99539d0a1:0xcd83c21cc939b6ca,3,,,,";
 
   return (
     <Column fillWidth horizontal="center" padding="64" gap="32">
