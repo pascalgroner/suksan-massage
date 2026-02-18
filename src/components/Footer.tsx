@@ -5,6 +5,8 @@ import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { social } from "@/resources/once-ui.config";
 
+import buildInfo from "@/build-info.json";
+
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
   const t = useTranslations("Footer");
@@ -61,9 +63,14 @@ export const Footer = () => {
         )}
       </Flex>
 
-      <Text variant="body-default-xs" onBackground="neutral-weak">
-        {t("copyright", { year: currentYear })}
-      </Text>
+      <Column horizontal="center" gap="xs">
+        <Text variant="body-default-xs" onBackground="neutral-weak" align="center">
+            {t("copyright", { year: currentYear })}
+        </Text>
+        <Text variant="body-default-xs" onBackground="neutral-weak" style={{ opacity: 0.6 }}>
+            v{buildInfo.version} ({buildInfo.buildNumber}) - {buildInfo.buildDate}
+        </Text>
+      </Column>
     </Column>
   );
 };

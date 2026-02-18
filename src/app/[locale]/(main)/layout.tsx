@@ -11,6 +11,7 @@ import { Providers } from '@/components/Providers';
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/react";
 
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
@@ -97,6 +98,7 @@ export default async function RootLayout({
             </Column>
 
             <Footer />
+            <Analytics />
           </Column>
         </Providers>
       </NextIntlClientProvider>
