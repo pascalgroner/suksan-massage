@@ -78,7 +78,10 @@ export default async function RootLayout({
       </head>
       <NextIntlClientProvider messages={messages}>
         <Providers>
-          <Column as="body" background="page" fillWidth margin="0" padding="0" style={{ minHeight: "100vh" }}>
+            <Column as="body" background="page" fillWidth margin="0" padding="0" style={{ minHeight: "100vh" }}>
+            {process.env.NEXT_PUBLIC_GTM_ID && (
+                <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+            )}
             <JsonLd />
             <Column style={{maxHeight: "100dvh"}} fillWidth aspectRatio="1" horizontal="center" position="absolute" top="0" left="0" zIndex={0}>
               <Mask maxWidth="m" x={50} y={0} radius={50}>
@@ -103,9 +106,6 @@ export default async function RootLayout({
           </Column>
         </Providers>
       </NextIntlClientProvider>
-      {process.env.NEXT_PUBLIC_GTM_ID && (
-          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
-      )}
     </Flex>
   );
 }

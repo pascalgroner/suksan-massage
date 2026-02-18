@@ -20,6 +20,11 @@ const GoogleMapsLocator = dynamic(
 );
 
 export default function MapWrapper() {
+  // Falling back to Leaflet Map (OpenStreetMap) to ensure functionality.
+  // The Google Maps implementation is temporarily disabled.
+  return <LeafletMap />;
+
+  /*
   // Check if the Google Maps API key is configured
   const hasGoogleMapsKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY && process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY.length > 0;
 
@@ -28,4 +33,5 @@ export default function MapWrapper() {
   }
 
   return <LeafletMap />;
+  */
 }
