@@ -18,9 +18,9 @@ export default async function JsonLd() {
     "@context": "https://schema.org",
     "@type": "MassageShop" as any,
     "name": "Suksan Massage",
-    "image": "https://suksan-massage.ch/images/og/home.jpg",
+    "image": "https://suksan-massage.com/images/og/home.jpg",
     "telephone": "+41 31 123 45 67",
-    "email": "info@suksan-massage.ch",
+    "email": "info@suksan-massage.com",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Musterstrasse 12",

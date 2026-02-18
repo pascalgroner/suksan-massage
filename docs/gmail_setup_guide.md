@@ -1,6 +1,6 @@
 # Gmail & Google Workspace Setup Guide for Suksan Massage
 
-This guide explains how to set up a Gmail account (either free `@gmail.com` or Google Workspace `info@suksan-massage.ch`) to send emails from your website securely.
+This guide explains how to set up a Gmail account (either free `@gmail.com` or Google Workspace `info@suksan-massage.com`) to send emails from your website securely.
 
 ## Option A: Using a Free Gmail Account (e.g., `suksan.massage@gmail.com`)
 
@@ -30,15 +30,15 @@ MAIL2SMS_ADDRESS=0791234567@mailsms.ch
 
 ---
 
-## Option B: Using Google Workspace (Professional `info@suksan-massage.ch`)
+## Option B: Using Google Workspace (Professional `info@suksan-massage.com`)
 
 This looks more professional but costs money (~$6/month).
 
 ### 1. Set up Google Workspace
 
 1.  Sign up at [workspace.google.com](https://workspace.google.com/).
-2.  Verify your domain `suksan-massage.ch` (usually via simple DNS record).
-3.  Create your user: `info@suksan-massage.ch`.
+2.  Verify your domain `suksan-massage.com` (usually via simple DNS record).
+3.  Create your user: `info@suksan-massage.com`.
 
 ### 2. Configure DNS (MX Records)
 
@@ -56,7 +56,7 @@ You need to tell the internet to deliver email to Google.
 
 ### 3. Authenticate the Website (SMTP Relay)
 
-To allow the website to send emails _as_ `info@suksan-massage.ch` without going to spam:
+To allow the website to send emails _as_ `info@suksan-massage.com` without going to spam:
 
 **Step 3a: Turn on "Less Secure Apps" (Not Recommended) OR Use App Passwords (Recommended)**
 
@@ -75,7 +75,7 @@ To allow the website to send emails _as_ `info@suksan-massage.ch` without going 
 ```env
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=465
-SMTP_USER=info@suksan-massage.ch
+SMTP_USER=info@suksan-massage.com
 SMTP_PASS=abcd efgh ijkl mnop   # The 16-char App Password
 MAIL2SMS_ADDRESS=0791234567@mailsms.ch
 ```

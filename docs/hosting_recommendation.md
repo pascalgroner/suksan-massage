@@ -59,10 +59,10 @@ Since you have your domain at **Namecheap**, here is the setup process:
 4.  **Configure Build:**
     - **Build Command:** `npm run build`
     - **Publish Directory:** `.next` (Netlify usually detects this automatically).
-    - **Environment Variables:** Add any keys if we have them (currently none critical for build, but add `NEXT_PUBLIC_BASE_URL` = `https://suksan-massage.ch`).
+    - **Environment Variables:** Add any keys if we have them (currently none critical for build, but add `NEXT_PUBLIC_BASE_URL` = `https://suksan-massage.com`).
 5.  **Deploy:** Click "Deploy Site".
 6.  **Domain Setup (Namecheap):**
-    - In Netlify: Go to "Domain Management" -> "Add Custom Domain" -> `suksan-massage.ch`.
+    - In Netlify: Go to "Domain Management" -> "Add Custom Domain" -> `suksan-massage.com`.
     - Netlify will give you **Nameservers** (e.g., `dns1.p01.nsone.net`).
     - In Namecheap: Go to your Domain -> "Nameservers" -> Select "Custom DNS".
     - Paste the Netlify Nameservers there.

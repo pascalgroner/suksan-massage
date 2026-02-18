@@ -8,7 +8,7 @@ This document outlines the unified strategy to maximize visibility in both tradi
 
 ### 1. Domain & URL Structure
 
-- **Domain:** `suksan-massage.ch` - Strong, localized domain.
+- **Domain:** `suksan-massage.com` - Strong, localized domain.
 - **URL Pattern:** `domain.ch/[locale]/[service-name]` (e.g., `/de/services`, `/en/contact`).
 - **Consistency:** Use canonical tags to prevent duplicate content issues across languages (Implemented).
 

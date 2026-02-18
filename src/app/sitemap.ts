@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseURL = "https://suksan-massage.ch";
+  const baseURL = "https://suksan-massage.com";
   const locales = ["de", "en"];
   const paths = ["/", "/services", "/contact"];
 

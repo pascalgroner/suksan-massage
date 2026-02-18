@@ -73,9 +73,9 @@ const meta = {
     description:
       "Experience professional Nuad Thai and Oil Massage in Bern, Switzerland. Certified therapists for back pain relief and relaxation.",
     image: "/images/og/home.jpg",
-    canonical: "https://suksan-massage.ch",
+    canonical: "https://suksan-massage.com",
     robots: "index,follow",
-    alternates: [{ href: "https://suksan-massage.ch", hrefLang: "de" }],
+    alternates: [{ href: "https://suksan-massage.com", hrefLang: "de" }],
   },
   // add more routes and reference them in page.tsx
 };
@@ -86,7 +86,7 @@ const schema = {
   type: "LocalBusiness",
   name: "Suksan Massage",
   description: meta.home.description,
-  email: "info@suksan-massage.ch",
+  email: "info@suksan-massage.com",
 };
 
 // social links

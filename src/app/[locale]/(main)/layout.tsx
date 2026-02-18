@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     image: meta.home.image,
     robots: meta.home.robots,
     alternates: [
-      { href: 'https://suksan-massage.ch/de', hrefLang: 'de' },
-      { href: 'https://suksan-massage.ch/en', hrefLang: 'en' },
+      { href: 'https://suksan-massage.com/de', hrefLang: 'de' },
+      { href: 'https://suksan-massage.com/en', hrefLang: 'en' },
     ],
   });
 }
