@@ -13,6 +13,7 @@ import { Link } from "@/navigation"; // Use localized Link
 import { ServiceCard } from "@/components/ServiceCard";
 import { useTranslations, useMessages } from "next-intl";
 import { Faq } from "@/components/Faq";
+import { ReviewList } from "@/components/ReviewList";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -170,6 +171,8 @@ export default function Home() {
             />
           ))}
         </div>
+
+        <ReviewList />
       </Column>
 
       {/* About Section */}

@@ -1,15 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Column, Flex, Heading, Input, Text, Grid } from "@once-ui-system/core";
 import { useTranslations } from "next-intl";
 import { EnvVarItem } from "./EnvVarItem";
+import { Link } from "@/navigation";
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      setPassword("LoginTest123");
+    }
+  }, []);
 
   // State for raw translation data
   const [translations, setTranslations] = useState<any>({ de: {}, en: {} });
@@ -281,6 +288,16 @@ export default function AdminPage() {
                         onChange={(e) => updateServiceDuration(e.target.value)}
                     />
                 </Column>
+            </Flex>
+        </Column>
+
+        {/* Marketing Tools */}
+        <Column fillWidth gap="m" background="surface" padding="l" radius="l" border="neutral-alpha-weak">
+            <Heading variant="heading-strong-s">Marketing Tools</Heading>
+            <Flex gap="m" wrap>
+                <Link href="/admin/review-card" passHref>
+                    <Button variant="secondary" arrowIcon>Generate Review QR Card (A6)</Button>
+                </Link>
             </Flex>
         </Column>
 
