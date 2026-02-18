@@ -1,56 +1,68 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import fs from 'fs';
-import path from 'path';
 
-const COUNTER_FILE = path.join(process.cwd(), 'src', 'resources', 'counter.json');
+
+import { Redis } from '@upstash/redis';
+
+// Initialize Redis client if environment variables are available
+let redis: Redis | null = null;
+try {
+    if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+        redis = Redis.fromEnv();
+    }
+} catch (e) {
+    console.warn("Redis configuration missing or invalid. Falling back to no-limit mode.");
+}
 
 const checkAndIncrementLimit = async (limit: number, alertEmail: string, transporter: any, smtpFrom: string) => {
-    let data = { date: '', count: 0 };
-    try {
-        if (fs.existsSync(COUNTER_FILE)) {
-            data = JSON.parse(fs.readFileSync(COUNTER_FILE, 'utf8'));
-        }
-    } catch (e) {
-        // file might not exist yet or be corrupt
+    // If Redis is not configured, we cannot enforce limits persistently on Vercel.
+    // In this case, we allow the request to proceed (fail-open) to avoid breaking the contact form.
+    if (!redis) {
+        console.warn("DAILY_LIMIT_WARNING: Redis is not configured. Daily limit check skipped.");
+        return true; 
     }
 
     const today = new Date().toISOString().split('T')[0];
+    const key = `contact-form:daily-count:${today}`;
 
-    if (data.date !== today) {
-        data.date = today;
-        data.count = 0;
-    }
-
-    if (data.count >= limit) {
-        // Send alert only once when hitting the limit exactly (to avoid spamming)
-        if (data.count === limit) {
-             try {
-                await transporter.sendMail({
-                    from: smtpFrom,
-                    to: alertEmail,
-                    subject: `ALERT: Daily Submission Limit Reached (${limit})`,
-                    text: `The daily limit of ${limit} submissions for Suksan Massage has been reached for date ${today}. Check the admin panel or logs.`
-                });
-             } catch (e) {
-                 console.error("Failed to send alert email", e);
-             }
-             // Increment once more to mark as 'alerted'
-             data.count++;
-             fs.writeFileSync(COUNTER_FILE, JSON.stringify(data));
-        }
-        return false;
-    }
-
-    data.count++;
-    
     try {
-        fs.writeFileSync(COUNTER_FILE, JSON.stringify(data));
-    } catch (e) {
-        console.error("Failed to write counter file", e);
+        // Increment the counter for today
+        const count = await redis.incr(key);
+        
+        // Set expiry for the key (e.g., 24 hours + buffer to ensure it cleans up)
+        if (count === 1) {
+            await redis.expire(key, 86400); 
+        }
+
+        if (count > limit) {
+             // Limit exceeded
+             // Check if we should send an alert (only on the first exceedance or periodically?)
+             // Simple logic: if count is exactly limit + 1, we know we just exceeded it. 
+             // Or if count == limit, we are AT limit. 
+             // The requirement was: "Send alert only once when hitting the limit exactly".
+             // So:
+             if (count === limit + 1) {
+                  try {
+                    await transporter.sendMail({
+                        from: smtpFrom,
+                        to: alertEmail,
+                        subject: `ALERT: Daily Submission Limit Reached (${limit})`,
+                        text: `The daily limit of ${limit} submissions for Suksan Massage has been reached for date ${today}. Future requests today will be blocked.`
+                    });
+                 } catch (e) {
+                     console.error("Failed to send alert email", e);
+                 }
+             }
+             return false;
+        }
+
+        return true;
+
+    } catch (error) {
+        console.error("Redis error:", error);
+        // If Redis fails, fail-open to allow the request
+        return true;
     }
-    
-    return true;
 };
 
 export async function POST(request: Request) {
@@ -165,11 +177,24 @@ Behandlung: ${fullServiceDescriptionDE}`;
     };
     
     // 5. Send to Shop Owner
-    await transporter.sendMail(mailOptionsToOwner);
-    console.log('Notification sent to shop owner.');
+    try {
+        const info = await transporter.sendMail(mailOptionsToOwner);
+        if (info.rejected.length > 0) {
+            console.error("Email rejected by SMTP server:", info.rejected);
+            throw new Error("Email rejected by SMTP server");
+        }
+        console.log('Notification sent to shop owner.');
+    } catch (err) {
+        console.error("Failed to send email to shop owner:", err);
+        return NextResponse.json(
+            { error: 'Server error: Failed to deliver message. Please try again later or call us directly.' },
+            { status: 500 }
+        );
+    }
 
     // 6. Optional: Send Confirmation to Customer
     if (process.env.ENABLE_CUSTOMER_CONFIRMATION === 'true') {
+        // ... (rest of confirmation logic)
         const gatewayDomain = process.env.SMS_GATEWAY_DOMAIN || 'sms.mail2sms.ch';
         let targetPhone = phone.replace(/\s+/g, '');
         if (targetPhone.startsWith('+41')) {
@@ -214,16 +239,17 @@ Behandlung: ${fullServiceDescriptionDE}`;
             });
              console.log('Confirmation sent to customer.');
         } catch (e) {
-            console.error("Failed to send customer confirmation", e);
+            console.error("Failed to send customer confirmation (non-critical)", e);
+            // We do NOT fail the request here, just log it.
         }
     }
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({ success: true, message: "Message sent successfully" }, { status: 200 });
 
   } catch (error) {
-    console.error('Error in /api/contact:', error);
+    console.error('Unexpected Error in /api/contact:', error);
     return NextResponse.json(
-      { error: 'Failed to send message' },
+      { error: 'Internal Server Error. Please contact us by phone.' },
       { status: 500 }
     );
   }

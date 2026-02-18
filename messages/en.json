@@ -106,7 +106,8 @@
       "labelTime": "Time",
       "confirmationSubject": "Request Received - Suksan Massage",
       "confirmationBody": "Hello {name},\n\nThank you for your request for {service}.\n\nWe have received your request and will contact you shortly to confirm the appointment.\n\nBest regards,\nSuksan Massage",
-      "sendAnother": "Send Another Request"
+      "sendAnother": "Send Another Request",
+      "errorMessage": "Server error: The message could not be sent. Please try again later or contact us by phone."
     },
     "directionsTitle": "Directions",
     "publicTransport": "Public Transport: Bus No. 20 (Breitfeld) 2 minutes walking, Tram No. 3,6,7,8,9 (Breitenrein) 4 minutes walking"
